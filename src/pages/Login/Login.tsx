@@ -1,29 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from './Login.module.css';
 
 function Login() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPass, setInputPass] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
-
+  const navigate = useNavigate();
   const validateEmail = /\S+@\S+\.\S+/;
 
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if ((validateEmail.test(inputEmail)) && (inputPass.length > 6)) {
+  useEffect(() => {
+    if ((validateEmail.test(inputEmail)) && (inputPass.length + 1 > 7)) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
+  }, [inputEmail, inputPass]);
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputEmail(e.target.value);
   };
 
   const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if ((validateEmail.test(inputEmail)) && (inputPass.length + 1 >= 6)) {
-      setIsDisabled(false);
-    } else {
-      setIsDisabled(true);
-    }
     setInputPass(e.target.value);
+  };
+
+  const handleClick = () => {
+    navigate('/meals');
+    setInputEmail('');
+    setInputPass('');
+    localStorage.setItem('user', JSON.stringify({
+      email: inputEmail,
+    }));
   };
 
   return (
@@ -34,18 +42,22 @@ function Login() {
         type="email"
         data-testid="email-input"
         onChange={ handleChangeEmail }
+        value={ inputEmail }
       />
       <input
         className={ style.inputLogin }
         type="password"
         data-testid="password-input"
         onChange={ handleChangePassword }
+        minLength={ 7 }
+        value={ inputPass }
       />
       <button
         className={ style.btnLogin }
         type="submit"
         data-testid="login-submit-btn"
         disabled={ isDisabled }
+        onClick={ handleClick }
       >
         Enter
       </button>
