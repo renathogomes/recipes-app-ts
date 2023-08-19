@@ -15,7 +15,7 @@ function Login() {
     } else {
       setIsDisabled(true);
     }
-  }, [inputEmail, inputPass]);
+  }, [inputEmail, inputPass]); // Valida o número de caracteres reais em cada input
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputEmail(e.target.value);
@@ -27,9 +27,7 @@ function Login() {
 
   const handleClick = () => {
     navigate('/meals');
-    setInputEmail('');
-    setInputPass('');
-    localStorage.setItem('user', JSON.stringify({
+    localStorage.setItem('user', JSON.stringify({ // seta o objeto no localStorage
       email: inputEmail,
     }));
   };
