@@ -6,10 +6,10 @@ function RecipeDetails() {
   return (
     <>
       <div>Recipe details works!</div>
-      <div>
+      <h2>
         Recipe ID:
         { recipeId }
-      </div>
+      </h2>
     </>
   );
 }
