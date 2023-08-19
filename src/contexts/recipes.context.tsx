@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
-import { RecipeContextState } from '../types/recipe';
+import { RecipeContextState, RecipeContextType } from '../types/recipe';
 
-export const CONTEXT_INITIAL_STATE: RecipeContextState = {
+export const CONTEXT_INITIAL_STATE: RecipeContextType = {
   state: {
     scope: 'meals',
     searchParams: {
@@ -16,10 +16,21 @@ export const CONTEXT_INITIAL_STATE: RecipeContextState = {
 export const RecipeContext = createContext(CONTEXT_INITIAL_STATE);
 
 export function RecipeContextProvider({ value, children }: any) {
-  const [state, update] = useState({ ...CONTEXT_INITIAL_STATE, ...value });
+  const [innerState,
+    setInnerState] = useState<RecipeContextType>({ ...CONTEXT_INITIAL_STATE, ...value });
+
+  const updateState = (data: Partial<RecipeContextState>) => {
+    setInnerState({
+      ...innerState,
+      ...{ state: {
+        ...innerState.state,
+        ...data,
+      } },
+    });
+  };
 
   return (
-    <RecipeContext.Provider value={ { ...state, update } }>
+    <RecipeContext.Provider value={ { ...innerState, update: updateState } }>
       {children}
     </RecipeContext.Provider>
   );

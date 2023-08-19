@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
-import { RecipeSearchParams } from '../../types/recipe';
+import { Recipe, RecipeSearchParams } from '../../types/recipe';
 
 export default function SearchInput() {
   const INITIAL_SEARCH_STATE: RecipeSearchParams = {
@@ -10,7 +10,7 @@ export default function SearchInput() {
     term: '',
   };
 
-  const context = useContext(RecipeContext);
+  const { state, update } = useContext(RecipeContext);
 
   const [searchParams,
     setSearchParams] = useState<RecipeSearchParams>(INITIAL_SEARCH_STATE);
@@ -30,21 +30,27 @@ export default function SearchInput() {
       return;
     }
 
-    const result = await FoodService(context.state.scope)
-      .search(searchParams.type, searchParams.term);
+    let result = await FoodService(state.scope)
+      .search(searchParams.type, searchParams.term) as Recipe[];
 
-    context.update({
-      ...context,
-      ...{ state: {
-        ...context.state,
-        searchParams,
-        recipes: result,
-      } },
+    if (result.length > 12) {
+      result = result.slice(0, 12);
+    }
+
+    update({
+      ...state,
+      searchParams,
+      recipes: result,
     });
+
+    if (result.length === 0) {
+      window.alert('Sorry, we haven\'t found any recipes for these filters.');
+      return;
+    }
 
     if (result.length === 1) {
       const { idMeal, idDrink } = result[0];
-      navigate(`/${context.state.scope}/${idMeal || idDrink}`);
+      navigate(`/${state.scope}/${idMeal || idDrink}`);
     }
   };
 

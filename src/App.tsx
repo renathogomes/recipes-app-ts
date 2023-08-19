@@ -16,11 +16,11 @@ function App() {
       <Route path="/meals/:recipeId" element={ <RecipeDetails /> } />
       <Route path="/drinks/:recipeId" element={ <RecipeDetails /> } />
       <Route
-        path="/meals/:id-da-receita/in-progress"
+        path="/meals/:recipeId/in-progress"
         element={ <h2>meal in progress</h2> }
       />
       <Route
-        path="/drinks/:id-da-receita/in-progress"
+        path="/drinks/:recipeId/in-progress"
         element={ <h2>drink in progress</h2> }
       />
       <Route
