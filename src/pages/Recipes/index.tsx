@@ -1,6 +1,8 @@
+import Header from '../../components/Header';
+
 function Recipes() {
   return (
-    <h1>Recipes</h1>
+    <Header pageTitle="Recipes" />
   );
 }
 

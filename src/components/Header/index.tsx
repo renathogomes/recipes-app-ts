@@ -12,11 +12,14 @@ export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
   const [searchOn, setSearchOn] = useState(false);
 
   return (
-    <header>
-      <ProfileButton />
-      { searchIcon && <SearchButton barVisible={ () => setSearchOn(!searchOn) } /> }
-      { searchOn && <SearchInput /> }
-      <h1 data-testid="page-title">{ pageTitle }</h1>
-    </header>
+    <>
+      <header>
+        <ProfileButton />
+        { searchIcon && <SearchButton barVisible={ () => setSearchOn(!searchOn) } /> }
+        { searchOn && <SearchInput /> }
+        <h1 data-testid="page-title">{ pageTitle }</h1>
+      </header>
+      <hr />
+    </>
   );
 }
