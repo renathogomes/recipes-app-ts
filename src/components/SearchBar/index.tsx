@@ -1,68 +1,100 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
-import { SearchType } from '../../types/types';
+import { RecipeSearchParams } from '../../types/recipe';
 
 export default function SearchInput() {
-  const [searchType, setSearchType] = useState<SearchType>('s');
-  const [searchTerm, setSearchTerm] = useState<string>('');
-
-  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const INITIAL_SEARCH_STATE: RecipeSearchParams = {
+    type: 's',
+    term: '',
   };
 
-  const handleSearchTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchType(e.target.value as SearchType);
+  const context = useContext(RecipeContext);
+
+  const [searchParams,
+    setSearchParams] = useState<RecipeSearchParams>(INITIAL_SEARCH_STATE);
+
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchParams({
+      ...searchParams,
+      [e.target.id]: e.target.value,
+    });
   };
 
   const handleClick = async () => {
-    if (searchType === 'f' && searchTerm.length > 1) {
+    if (searchParams.type === 'f' && searchParams.term.length > 1) {
       window.alert('Your search must have only 1 (one) character');
       return;
     }
-    const result = await FoodService('meal').search(searchType, searchTerm);
-    console.log(result);
+
+    const result = await FoodService(context.state.scope)
+      .search(searchParams.type, searchParams.term);
+
+    context.update({
+      ...context,
+      ...{ state: {
+        ...context.state,
+        searchParams,
+        recipes: result,
+      } },
+    });
+
+    if (result.length === 1) {
+      const { idMeal, idDrink } = result[0];
+      navigate(`/${context.state.scope}/${idMeal || idDrink}`);
+    }
   };
 
   return (
     <>
       <div>
-        <input
-          checked={ searchType === 'i' }
-          type="radio"
-          id="ingredient"
-          name="search"
-          value="i"
-          data-testid="ingredient-search-radio"
-          onChange={ handleSearchTypeChange }
-        />
-        <label htmlFor="ingredient">Ingredient</label>
-        <input
-          checked={ searchType === 's' }
-          type="radio"
-          id="name"
-          name="search"
-          value="s"
-          data-testid="name-search-radio"
-          onChange={ handleSearchTypeChange }
-        />
-        <label htmlFor="name">Name</label>
-        <input
-          checked={ searchType === 'f' }
-          type="radio"
-          id="first-letter"
-          name="search"
-          value="f"
-          data-testid="first-letter-search-radio"
-          onChange={ handleSearchTypeChange }
-        />
-        <label htmlFor="first-letter">First letter</label>
+        <label>
+          <input
+            checked={ searchParams.type === 'i' }
+            type="radio"
+            id="type"
+            name="search"
+            value="i"
+            data-testid="ingredient-search-radio"
+            onChange={ handleChange }
+          />
+          Ingredient
+        </label>
+        <label>
+          <input
+            checked={ searchParams.type === 's' }
+            type="radio"
+            id="type"
+            name="search"
+            value="s"
+            data-testid="name-search-radio"
+            onChange={ handleChange }
+          />
+          Name
+        </label>
+        <label>
+          <input
+            checked={ searchParams.type === 'f' }
+            type="radio"
+            id="type"
+            name="search"
+            value="f"
+            data-testid="first-letter-search-radio"
+            onChange={ handleChange }
+          />
+          First letter
+        </label>
       </div>
       <input
-        value={ searchTerm }
+        id="term"
+        value={ searchParams.term }
         data-testid="search-input"
         type="text"
         placeholder="Buscar Receita"
-        onChange={ handleSearchTermChange }
+        onChange={ handleChange }
       />
       <button
         type="button"
