@@ -1,7 +1,6 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { render } from '@testing-library/react';
-import { RecipeContextProvider } from '../../contexts/recipes.context';
 
 type Options = {
   initialEntries?: string[];
@@ -10,9 +9,9 @@ type Options = {
 
 function withRouter(component: React.ReactElement, initialEntries: string[]) {
   return (
-      <MemoryRouter initialEntries={ initialEntries }>
-        { component }
-      </MemoryRouter>
+    <MemoryRouter initialEntries={ initialEntries }>
+      { component }
+    </MemoryRouter>
   );
 }
 

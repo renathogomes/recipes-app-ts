@@ -15,7 +15,7 @@ beforeEach(() => {
     json: async () => mockSearchMeal,
   });
   window.alert = vi.fn();
-})
+});
 
 describe('Testando o componente SearchBar', async () => {
   const EXEC_SEARCH_BTN = 'exec-search-btn';
@@ -26,7 +26,7 @@ describe('Testando o componente SearchBar', async () => {
 
   test('Verifica se a página contém um input de texto', async () => {
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
     const inputText = screen.getByTestId(SEARCH_INPUT);
     await userEvent.type(inputText, SEARCH_INPUT);
     expect(inputText).toBeInTheDocument();
@@ -34,20 +34,20 @@ describe('Testando o componente SearchBar', async () => {
 
   test('Verifica se a página contém um botão', async () => {
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
     const button = screen.getByTestId(EXEC_SEARCH_BTN);
     expect(button).toBeInTheDocument();
   });
 
   test('Verifica se a página contém um input do tipo radio', async () => {
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
     const radio = screen.getByTestId(INGREDIENT_SEARCH_RADIO);
     expect(radio).toBeInTheDocument();
   });
   test('Verifica se o botão está habilitado caso o input esteja preenchido', async () => {
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
     const inputText = screen.getByTestId(SEARCH_INPUT);
     const button = screen.getByTestId(EXEC_SEARCH_BTN);
     await userEvent.type(inputText, 'teste');
@@ -55,8 +55,8 @@ describe('Testando o componente SearchBar', async () => {
   });
   test('Verifica se o botão botão de busca dispara a busca', async () => {
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
-    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'a')
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'a');
     await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
     expect(global.fetch).toBeCalledTimes(1);
     expect(screen.getByText('Corba')).toBeInTheDocument();
@@ -64,9 +64,9 @@ describe('Testando o componente SearchBar', async () => {
   });
   test('Verifica se ao selecionar para buscar com a primeira letra e digitar mais de uma, emite um alerta e não gera a busca', async () => {
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
-    await userEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO))
-    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'ab')
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
+    await userEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO));
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'ab');
     await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
     expect(global.fetch).toBeCalledTimes(0);
     expect(window.alert).toBeCalledTimes(1);
@@ -78,18 +78,17 @@ describe('Testando o componente SearchBar', async () => {
       json: async () => ({ meals: null }),
     });
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
-    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'abasdqwd')
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'abasdqwd');
     await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
     expect(window.alert).toBeCalledTimes(1);
     expect(window.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
-
   });
   test('Verifica se ao clicar em um card é redirecionado para a pagina correspondente', async () => {
     renderWithRouter(<App />, { route: '/meals' });
-    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
-    await userEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO))
-    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'a')
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
+    await userEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO));
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'a');
     await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
     expect(global.fetch).toBeCalledTimes(1);
     await userEvent.click(screen.getByText('Corba'));
