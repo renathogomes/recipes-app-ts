@@ -1,61 +1,98 @@
 /* eslint-disable no-restricted-globals */
 import userEvent from '@testing-library/user-event';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { vi } from 'vitest';
-import SearchBar from '../components/SearchBar';
 import { renderWithRouter } from '../helpers/renderWithRouter';
-import Recipes from '../pages/Recipes';
+import App from '../App';
+import mockSearchMeal from './mocks/mockSearchMeal';
 
-const expectUrlReturn = {
-  meals: [{ idMeals: '123', idDrinks: '123' }],
-  drinks: [{ idMeals: '123', idDrinks: '123' }],
-};
-
-global.fetch = vi.fn().mockResolvedValue({
-  json: async () => expectUrlReturn,
+afterEach(() => {
+  vi.clearAllMocks();
 });
+
+beforeEach(() => {
+  global.fetch = vi.fn().mockResolvedValue({
+    json: async () => mockSearchMeal,
+  });
+  window.alert = vi.fn();
+})
 
 describe('Testando o componente SearchBar', async () => {
   const EXEC_SEARCH_BTN = 'exec-search-btn';
   const SEARCH_INPUT = 'search-input';
   const INGREDIENT_SEARCH_RADIO = 'ingredient-search-radio';
-  renderWithRouter(<SearchBar />);
+  const SHOW_SEARCH_BTN = 'search-top-btn';
+  const FIRST_LETTER_SEARCH_RADIO = 'first-letter-search-radio';
+
   test('Verifica se a página contém um input de texto', async () => {
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
     const inputText = screen.getByTestId(SEARCH_INPUT);
     await userEvent.type(inputText, SEARCH_INPUT);
     expect(inputText).toBeInTheDocument();
   });
 
-  test('Verifica se a página contém um botão', () => {
+  test('Verifica se a página contém um botão', async () => {
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
     const button = screen.getByTestId(EXEC_SEARCH_BTN);
     expect(button).toBeInTheDocument();
   });
 
-  test('Verifica se a página contém um input do tipo radio', () => {
+  test('Verifica se a página contém um input do tipo radio', async () => {
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
     const radio = screen.getByTestId(INGREDIENT_SEARCH_RADIO);
     expect(radio).toBeInTheDocument();
   });
-  test('Verifica se o botão está desabilitado caso o input esteja vazio', () => {
-    const button = screen.getByTestId(EXEC_SEARCH_BTN);
-    expect(button).toBeDisabled();
-  });
   test('Verifica se o botão está habilitado caso o input esteja preenchido', async () => {
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
     const inputText = screen.getByTestId(SEARCH_INPUT);
     const button = screen.getByTestId(EXEC_SEARCH_BTN);
     await userEvent.type(inputText, 'teste');
     expect(button).toBeEnabled();
   });
-  test('Verifica se o botão está desabilitado caso o input esteja preenchido com apenas um caractere', async () => {
-    const inputText = screen.getByTestId(SEARCH_INPUT);
-    const button = screen.getByTestId(EXEC_SEARCH_BTN);
-    await userEvent.type(inputText, 't');
-    expect(button).toBeDisabled();
-  });
   test('Verifica se o botão botão de busca dispara a busca', async () => {
-    const comp = render(<Recipes scope="meals" />);
-    const button = comp.getByTestId(EXEC_SEARCH_BTN);
-    fireEvent.click(button);
-    const element = await waitFor(() => comp.getByTestId('0-recipe-card'));
-    expect(element).toBeInTheDocument();
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'a')
+    await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+    expect(global.fetch).toBeCalledTimes(1);
+    expect(screen.getByText('Corba')).toBeInTheDocument();
+    expect(screen.getAllByTestId(/recipe-card/!)).toHaveLength(12);
+  });
+  test('Verifica se ao selecionar para buscar com a primeira letra e digitar mais de uma, emite um alerta e não gera a busca', async () => {
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO))
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'ab')
+    await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+    expect(global.fetch).toBeCalledTimes(0);
+    expect(window.alert).toBeCalledTimes(1);
+    expect(window.alert).toBeCalledWith('Your search must have only 1 (one) character');
+  });
+  test('Verifica se retorna uma mensagem de erro caso a busca não retorne resultados', async () => {
+    vi.clearAllMocks();
+    global.fetch = vi.fn().mockResolvedValue({
+      json: async () => ({ meals: null }),
+    });
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'abasdqwd')
+    await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+    expect(window.alert).toBeCalledTimes(1);
+    expect(window.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
+
+  });
+  test('Verifica se ao clicar em um card é redirecionado para a pagina correspondente', async () => {
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN))
+    await userEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO))
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'a')
+    await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+    expect(global.fetch).toBeCalledTimes(1);
+    await userEvent.click(screen.getByText('Corba'));
+    expect(window.location.pathname).toBe('/meals/52977');
   });
 });
