@@ -1,12 +1,27 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RecipeContext } from '../../contexts/recipes.context';
+import { FoodService } from '../../services/services';
 import { Recipe } from '../../types/recipe';
 import style from './RecipesList.module.css';
 
 function RecipesList() {
-  const { state } = useContext(RecipeContext);
+  const { state, update } = useContext(RecipeContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadDefault = async () => {
+      let recipes = await FoodService(state.scope)
+        .search('s', '') as Recipe[];
+
+      if (recipes.length > 12) {
+        recipes = recipes.slice(0, 12);
+      }
+
+      update({ ...state, recipes });
+    };
+    loadDefault();
+  }, []);
 
   const cardClick = (recipe: Recipe) => {
     navigate(`/${state.scope}/${recipe.idMeal || recipe.idDrink}`);
