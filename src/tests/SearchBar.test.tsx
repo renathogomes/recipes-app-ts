@@ -5,15 +5,22 @@ import { vi } from 'vitest';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import App from '../App';
 import mockSearchMeal from './mocks/mockSearchMeal';
+import { mockRecipeCategories } from './mocks/mockRecipesList';
 
 afterEach(() => {
   vi.clearAllMocks();
 });
 
 beforeEach(() => {
-  global.fetch = vi.fn().mockResolvedValue({
+  global.fetch = vi.fn().mockResolvedValueOnce({
     json: async () => mockSearchMeal,
-  });
+  })
+    .mockResolvedValueOnce({
+      json: async () => mockRecipeCategories,
+    })
+    .mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    });
   window.alert = vi.fn();
 });
 
@@ -85,13 +92,27 @@ describe('Testando o componente SearchBar', async () => {
     expect(window.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
   });
   test('Verifica se ao clicar em um card é redirecionado para a pagina correspondente', async () => {
+    vi.clearAllMocks();
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    })
+      .mockResolvedValueOnce({
+        json: async () => mockRecipeCategories,
+      })
+      .mockResolvedValueOnce({
+        json: async () => mockSearchMeal,
+      })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: mockSearchMeal.meals[9] }),
+      });
     renderWithRouter(<App />, { route: '/meals' });
     await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
     await userEvent.click(screen.getByTestId(FIRST_LETTER_SEARCH_RADIO));
     await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'a');
     await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
     expect(global.fetch).toHaveBeenCalled();
-    await userEvent.click(screen.getByText('Corba'));
-    expect(window.location.pathname).toBe('/meals/52977');
+    await userEvent.click(screen.getByText('Wontons'));
+    expect(window.location.pathname).toBe('/meals/52948');
+    expect(screen.getByText('Recipe ID:52948')).toBeInTheDocument();
   });
 });

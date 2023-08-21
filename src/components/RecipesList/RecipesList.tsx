@@ -10,6 +10,7 @@ function RecipesList() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [filterCategory, setFilterCategory] = useState<Category | null>(null);
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
     const loadDefault = async () => {
@@ -51,13 +52,16 @@ function RecipesList() {
         update({ ...state, recipes });
         return;
       }
-      let recipes = await FoodService(state.scope)
-        .search('s', '') as Recipe[];
+      if (!isFirstRender) {
+        let recipes = await FoodService(state.scope)
+          .search('s', '') as Recipe[];
 
-      if (recipes.length > 12) {
-        recipes = recipes.slice(0, 12);
+        if (recipes.length > 12) {
+          recipes = recipes.slice(0, 12);
+        }
+        update({ ...state, recipes });
       }
-      update({ ...state, recipes });
+      setIsFirstRender(false);
     };
     filterByCategory();
   }, [filterCategory]);
@@ -73,7 +77,7 @@ function RecipesList() {
           >
             { category.strCategory }
           </button>
-        ))}
+        )) }
         <button
           data-testid="All-category-filter"
           onClick={ () => selectCategory() }
