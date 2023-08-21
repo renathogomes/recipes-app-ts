@@ -13,7 +13,7 @@ export function Footer() {
     >
       <button onClick={ () => navigate('/drinks') }>
         <img
-          className={ style.footer }
+          className={ style.menufooter }
           data-testid="drinks-bottom-btn"
           src={ drinkIcon }
           alt="drink icon"
