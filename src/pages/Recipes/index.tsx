@@ -1,9 +1,12 @@
+import { useContext, useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import RecipesList from '../../components/RecipesList/RecipesList';
 import { CONTEXT_INITIAL_STATE,
+  RecipeContext,
   RecipeContextProvider } from '../../contexts/recipes.context';
 import { capitalize } from '../../helpers/capitalize';
-import { RecipeScope } from '../../types/recipe';
+import { FoodService } from '../../services/services';
+import { Recipe, RecipeScope } from '../../types/recipe';
 
 export type RecipesProps = {
   scope: RecipeScope;

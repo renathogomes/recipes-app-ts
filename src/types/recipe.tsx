@@ -104,3 +104,7 @@ export type Recipe = {
   strMealThumb: string;
   strDrinkThumb: string;
 };
+
+export type Category = {
+  strCategory: string;
+};
