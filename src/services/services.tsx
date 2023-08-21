@@ -1,4 +1,4 @@
-import { Recipe, RecipeScope, RecipeSearchType } from '../types/recipe';
+import { Category, Recipe, RecipeScope, RecipeSearchType } from '../types/recipe';
 
 export const FoodService = (food: RecipeScope) => {
   const DRINK_URL = 'https://www.thecocktaildb.com/api/json/v1/1';
@@ -16,6 +16,11 @@ export const FoodService = (food: RecipeScope) => {
       const response = await fetch(`${BASE_URL}/lookup.php?i=${id}`);
       const data = await response.json();
       return data;
+    },
+    getCategories: async (): Promise<Category[]> => {
+      const response = await fetch(`${BASE_URL}/list.php?c=list`);
+      const data = await response.json();
+      return data[food] ?? [];
     },
   };
 };
