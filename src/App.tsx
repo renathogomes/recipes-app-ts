@@ -18,34 +18,34 @@ function App() {
   return (
 
     <>
-    <Routes>
-      <Route path="/" element={ <Login /> } />
-      <Route path="/meals" element={ <Recipes scope={ 'meals' as RecipeScope } /> } />
-      <Route path="/drinks" element={ <Recipes scope={ 'drinks' as RecipeScope } /> } />
-      <Route
-        path="/meals/:recipeId"
-        element={ <RecipeDetails scope={ 'meals' as RecipeScope } /> }
-      />
-      <Route
-        path="/drinks/:recipeId"
-        element={ <RecipeDetails scope={ 'drinks' as RecipeScope } /> }
-      />
-      <Route
-        path="/meals/:recipeId/in-progress"
-        element={ <h2>meal in progress</h2> }
-      />
-      <Route
-        path="/drinks/:recipeId/in-progress"
-        element={ <h2>drink in progress</h2> }
-      />
-      <Route
-        path="/profile"
-        element={
-          <Header
-            pageTitle="Profile"
-            searchIcon={ false }
-          />
-        }
+      <Routes>
+        <Route path="/" element={ <Login /> } />
+        <Route path="/meals" element={ <Recipes scope={ 'meals' as RecipeScope } /> } />
+        <Route path="/drinks" element={ <Recipes scope={ 'drinks' as RecipeScope } /> } />
+        <Route
+          path="/meals/:recipeId"
+          element={ <RecipeDetails scope={ 'meals' as RecipeScope } /> }
+        />
+        <Route
+          path="/drinks/:recipeId"
+          element={ <RecipeDetails scope={ 'drinks' as RecipeScope } /> }
+        />
+        <Route
+          path="/meals/:recipeId/in-progress"
+          element={ <h2>meal in progress</h2> }
+        />
+        <Route
+          path="/drinks/:recipeId/in-progress"
+          element={ <h2>drink in progress</h2> }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Header
+              pageTitle="Profile"
+              searchIcon={ false }
+            />
+          }
         />
         <Route
           path="/done-recipes"
@@ -54,7 +54,7 @@ function App() {
               pageTitle="Done Recipes"
               searchIcon={ false }
             />
-        }
+          }
         />
         <Route
           path="/favorite-recipes"
@@ -63,10 +63,10 @@ function App() {
               pageTitle="Favorite Recipes"
               searchIcon={ false }
             />
-        }
+          }
         />
       </Routes>
-      {hasFooter && <Footer />}
+      { hasFooter && <Footer /> }
     </>
 
   );
