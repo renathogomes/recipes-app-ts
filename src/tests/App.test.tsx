@@ -6,16 +6,19 @@ import { renderWithRouter } from '../helpers/renderWithRouter';
 import Login from '../pages/Login/Login';
 import App from '../App';
 import { mockRecipeCategories } from './mocks/mockRecipesList';
+import mockSearchMeal from './mocks/mockSearchMeal';
 
 afterEach(() => {
   vi.clearAllMocks();
 });
 
 beforeEach(() => {
-  global.fetch = vi.fn().mockResolvedValue({
-    json: async () => mockRecipeCategories,
-  });
-  window.alert = vi.fn();
+  global.fetch = vi.fn().mockResolvedValueOnce({
+    json: async () => mockSearchMeal,
+  })
+    .mockResolvedValueOnce({
+      json: async () => mockRecipeCategories,
+    });
 });
 
 describe('Testes referentes à página Login.tsx', () => {
