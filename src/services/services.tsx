@@ -12,10 +12,10 @@ export const FoodService = (food: RecipeScope) => {
       const data = await response.json();
       return data[food] ?? [];
     },
-    getById: async (id: string): Promise<Recipe> => {
+    getById: async (id?: string): Promise<Recipe> => {
       const response = await fetch(`${BASE_URL}/lookup.php?i=${id}`);
       const data = await response.json();
-      return data;
+      return data[food];
     },
     getCategories: async (): Promise<Category[]> => {
       const response = await fetch(`${BASE_URL}/list.php?c=list`);
