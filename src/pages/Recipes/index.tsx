@@ -1,4 +1,3 @@
-import { useContext, useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import RecipesList from '../../components/RecipesList/RecipesList';
 import { CONTEXT_INITIAL_STATE,
