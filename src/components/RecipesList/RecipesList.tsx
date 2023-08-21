@@ -35,7 +35,9 @@ function RecipesList() {
   };
 
   const selectCategory = (category?: Category) => {
-    setFilterCategory(category || null);
+    const newCategory = category?.strCategory === filterCategory?.strCategory
+      ? null : category;
+    setFilterCategory(newCategory || null);
   };
 
   useEffect(() => {
