@@ -1,6 +1,28 @@
-function Recipes() {
+import Header from '../../components/Header';
+import RecipesList from '../../components/RecipesList/RecipesList';
+import { CONTEXT_INITIAL_STATE,
+  RecipeContextProvider } from '../../contexts/recipes.context';
+import { capitalize } from '../../helpers/capitalize';
+import { RecipeScope } from '../../types/recipe';
+
+export type RecipesProps = {
+  scope: RecipeScope;
+};
+
+function Recipes({ scope }: RecipesProps) {
   return (
-    <h1>Recipes</h1>
+    <RecipeContextProvider
+      value={ {
+        ...CONTEXT_INITIAL_STATE,
+        ...{ state: {
+          ...CONTEXT_INITIAL_STATE.state,
+          scope,
+        } },
+      } }
+    >
+      <Header pageTitle={ `Recipes - ${capitalize(scope)}` } />
+      <RecipesList />
+    </RecipeContextProvider>
   );
 }
 

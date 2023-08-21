@@ -6,7 +6,9 @@ import App from '../App';
 test('verificar se o componente Header é renderizado corretamente conforme os argumentos passados', () => {
   renderWithRouter(<App />, { initialEntries: ['/meals'] });
 
-  expect(screen.getByText('Meals')).toBeInTheDocument();
+  const header = screen.getByTestId('page-title');
+
+  expect(header).toHaveTextContent('Meals');
   expect(screen.getByTestId('search-top-btn')).toBeInTheDocument();
 });
 
