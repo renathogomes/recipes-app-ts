@@ -58,6 +58,6 @@ describe('Testando service', () => {
   test('Retorno da busca por id correto', async () => {
     const service = FoodService('meals');
     const data = await service.getById('123');
-    expect(data).toEqual(expectUrlReturn);
+    expect(data).toEqual(expectUrlReturnById);
   });
 });
