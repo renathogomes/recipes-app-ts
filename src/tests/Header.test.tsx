@@ -18,7 +18,6 @@ test('verificar se ao clilcar no botão de perfil, a rota muda para a página de
   const profileButton = screen.getByTestId('profile-top-btn');
 
   await userEvent.click(profileButton);
-
   expect(screen.getByText('Profile')).toBeInTheDocument();
 });
 
