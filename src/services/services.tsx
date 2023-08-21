@@ -22,5 +22,10 @@ export const FoodService = (food: RecipeScope) => {
       const data = await response.json();
       return data[food] ?? [];
     },
+    getByCategory: async (category: string): Promise<Recipe[]> => {
+      const response = await fetch(`${BASE_URL}/filter.php?c=${category}`);
+      const data = await response.json();
+      return data[food] ?? [];
+    },
   };
 };

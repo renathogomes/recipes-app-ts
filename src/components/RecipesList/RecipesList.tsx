@@ -9,6 +9,7 @@ function RecipesList() {
   const { state, update } = useContext(RecipeContext);
   const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [filterCategory, setFilterCategory] = useState<Category | null>(null);
 
   useEffect(() => {
     const loadDefault = async () => {
@@ -33,6 +34,32 @@ function RecipesList() {
     navigate(`/${state.scope}/${recipe.idMeal || recipe.idDrink}`);
   };
 
+  const selectCategory = (category?: Category) => {
+    setFilterCategory(category || null);
+  };
+
+  useEffect(() => {
+    const filterByCategory = async () => {
+      if (filterCategory) {
+        let recipes = await FoodService(state.scope)
+          .getByCategory(filterCategory.strCategory);
+        if (recipes.length > 12) {
+          recipes = recipes.slice(0, 12);
+        }
+        update({ ...state, recipes });
+        return;
+      }
+      let recipes = await FoodService(state.scope)
+        .search('s', '') as Recipe[];
+
+      if (recipes.length > 12) {
+        recipes = recipes.slice(0, 12);
+      }
+      update({ ...state, recipes });
+    };
+    filterByCategory();
+  }, [filterCategory]);
+
   return (
     <div>
       <div>
@@ -40,10 +67,18 @@ function RecipesList() {
           <button
             key={ category.strCategory }
             data-testid={ `${category.strCategory}-category-filter` }
+            onClick={ () => selectCategory(category) }
           >
             { category.strCategory }
           </button>
         ))}
+        <button
+          data-testid="All-category-filter"
+          onClick={ () => selectCategory() }
+        >
+          All
+
+        </button>
       </div>
       <div>
         { state.recipes.map((recipe, index) => (
