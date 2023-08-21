@@ -1,9 +1,22 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import Login from '../pages/Login/Login';
 import App from '../App';
+import { mockRecipeCategories } from './mocks/mockRecipesList';
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
+
+beforeEach(() => {
+  global.fetch = vi.fn().mockResolvedValue({
+    json: async () => mockRecipeCategories,
+  });
+  window.alert = vi.fn();
+});
 
 describe('Testes referentes à página Login.tsx', () => {
   const EMAIL_INPUT = 'email-input';

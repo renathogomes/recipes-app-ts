@@ -1,7 +1,20 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
 import { renderWithRouter } from './helpers/renderWith';
 import App from '../App';
+import { mockRecipeCategories } from './mocks/mockRecipesList';
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
+
+beforeEach(() => {
+  global.fetch = vi.fn().mockResolvedValue({
+    json: async () => mockRecipeCategories,
+  });
+  window.alert = vi.fn();
+});
 
 test('verificar se o componente Header é renderizado corretamente conforme os argumentos passados', () => {
   renderWithRouter(<App />, { initialEntries: ['/meals'] });
