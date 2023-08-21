@@ -6,6 +6,8 @@ const expectUrlReturn = {
   drinks: [{ idMeals: '123', idDrinks: '123' }],
 };
 
+const expectUrlReturnById = [{ idMeals: '123', idDrinks: '123' }];
+
 global.fetch = vi.fn().mockResolvedValue({
   json: async () => expectUrlReturn,
 });
@@ -26,13 +28,13 @@ describe('Testando service', () => {
   });
   test('Service search para Meals deve ser chamado com os argumentos corretos', () => {
     const service = FoodService('meals');
-    const spy = jest.spyOn(service, 'search');
+    const spy = vi.spyOn(service, 'search');
     service.search('s', 'teste');
     expect(spy).toHaveBeenCalledWith('s', 'teste');
   });
   test('Service search para Drink deve ser chamado com os argumentos corretos', () => {
     const service = FoodService('drinks');
-    const spy = jest.spyOn(service, 'search');
+    const spy = vi.spyOn(service, 'search');
     service.search('s', 'teste');
     expect(spy).toHaveBeenCalledWith('s', 'teste');
   });
@@ -51,11 +53,11 @@ describe('Testando service', () => {
   test('Retorno da busca correto', async () => {
     const service = FoodService('meals');
     const data = await service.search('s', 'teste');
-    expect(data).toEqual(expectUrlReturn);
+    expect(data).toEqual(expectUrlReturnById);
   });
   test('Retorno da busca por id correto', async () => {
     const service = FoodService('meals');
     const data = await service.getById('123');
-    expect(data).toEqual(expectUrlReturn);
+    expect(data).toEqual(expectUrlReturnById);
   });
 });
