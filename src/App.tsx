@@ -7,6 +7,8 @@ import Recipes from './pages/Recipes';
 import { RecipeScope } from './types/recipe';
 import RecipeDetails from './pages/RecipeDetails/RecipeDetails';
 import { Footer } from './components/Footer/Footer';
+import Profile from './pages/Profile/Profile';
+import { CONTEXT_INITIAL_STATE, GlobalContextProvider } from './contexts/global.context';
 
 function App() {
   const location = useLocation();
@@ -16,8 +18,7 @@ function App() {
     .startsWith('/profile');
 
   return (
-
-    <>
+    <GlobalContextProvider value={ CONTEXT_INITIAL_STATE }>
       <Routes>
         <Route path="/" element={ <Login /> } />
         <Route path="/meals" element={ <Recipes scope={ 'meals' as RecipeScope } /> } />
@@ -41,10 +42,7 @@ function App() {
         <Route
           path="/profile"
           element={
-            <Header
-              pageTitle="Profile"
-              searchIcon={ false }
-            />
+            <Profile />
           }
         />
         <Route
@@ -67,8 +65,7 @@ function App() {
         />
       </Routes>
       { hasFooter && <Footer /> }
-    </>
-
+    </GlobalContextProvider>
   );
 }
 
