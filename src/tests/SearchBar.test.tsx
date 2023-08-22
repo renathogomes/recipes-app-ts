@@ -115,4 +115,25 @@ describe('Testando o componente SearchBar', async () => {
     expect(window.location.pathname).toBe('/meals/52948');
     expect(screen.getByText('Wontons')).toBeInTheDocument();
   });
+  test('Verifica se ao pesquisar pelo nome exato, redireciona para a pagina da receita', async () => {
+    vi.clearAllMocks();
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    })
+      .mockResolvedValueOnce({
+        json: async () => mockRecipeCategories,
+      })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      });
+    renderWithRouter(<App />, { route: '/meals' });
+    await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
+    await userEvent.type(screen.getByTestId(SEARCH_INPUT), 'Corba');
+    await userEvent.click(screen.getByTestId(EXEC_SEARCH_BTN));
+    expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}`);
+    expect(screen.getByTestId('share-btn')).toBeInTheDocument();
+  });
 });

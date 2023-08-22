@@ -107,6 +107,7 @@ export type Recipe = {
   strInstructions: string;
   strAlcoholic?: string;
   strCategory: string;
+  strArea: string;
 };
 
 export type Category = {
