@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import { GlobalContext } from '../../contexts/global.context';
 
@@ -6,6 +7,12 @@ function Profile() {
   const { state } = useContext(GlobalContext);
   const getEmail = state.user.email
   || JSON.parse(localStorage.getItem('user') ?? '').email;
+  const navigate = useNavigate();
+  const redirect = (url: string) => navigate(`/${url}-recipes`);
+  const logout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
   return (
     <>
       <Header
@@ -13,9 +20,30 @@ function Profile() {
         searchIcon={ false }
       />
       <div data-testid="profile-email">{getEmail}</div>
-      <button type="button" data-testid="profile-done-btn">Done Recipes</button>
-      <button type="button" data-testid="profile-favorite-btn">Favorite Recipes</button>
-      <button type="button" data-testid="profile-logout-btn">Logout</button>
+      <button
+        type="button"
+        data-testid="profile-done-btn"
+        onClick={ () => redirect('done') }
+      >
+        Done Recipes
+
+      </button>
+      <button
+        type="button"
+        data-testid="profile-favorite-btn"
+        onClick={ () => redirect('favorite') }
+      >
+        Favorite Recipes
+
+      </button>
+      <button
+        type="button"
+        data-testid="profile-logout-btn"
+        onClick={ logout }
+      >
+        Logout
+
+      </button>
     </>
 
   );
