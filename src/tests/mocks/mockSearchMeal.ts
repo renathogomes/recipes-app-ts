@@ -30,7 +30,7 @@ const mockSearchMeal = {
       strMeal: 'Sushi',
       idMeal: '53065',
       strMealThumb: 'https://www.themealdb.com/images/media/meals/g046bb1663960946.jpg',
-      strCategory,
+      strCategory: 'Beef',
       strIngredient1,
       strMeasure1,
       strInstructions,
