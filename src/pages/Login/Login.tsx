@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { GlobalContext } from '../../contexts/global.context';
 import style from './Login.module.css';
 
 function Login() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPass, setInputPass] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
+  const { state, update } = useContext(GlobalContext);
   const navigate = useNavigate();
   const validateEmail = /\S+@\S+\.\S+/;
 
@@ -26,10 +28,11 @@ function Login() {
   };
 
   const handleClick = () => {
-    navigate('/meals');
     localStorage.setItem('user', JSON.stringify({ // seta o objeto no localStorage
       email: inputEmail,
     }));
+    update({ user: { email: inputEmail } }); // atualiza o estado global
+    navigate('/meals');
   };
 
   return (
