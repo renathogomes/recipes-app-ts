@@ -103,7 +103,7 @@ describe('Testando o componente SearchBar', async () => {
         json: async () => mockSearchMeal,
       })
       .mockResolvedValueOnce({
-        json: async () => ({ meals: mockSearchMeal.meals[9] }),
+        json: async () => ({ meals: [mockSearchMeal.meals[9]] }),
       });
     renderWithRouter(<App />, { route: '/meals' });
     await userEvent.click(screen.getByTestId(SHOW_SEARCH_BTN));
@@ -113,6 +113,6 @@ describe('Testando o componente SearchBar', async () => {
     expect(global.fetch).toHaveBeenCalled();
     await userEvent.click(screen.getByText('Wontons'));
     expect(window.location.pathname).toBe('/meals/52948');
-    expect(screen.getByText('Recipe ID:52948')).toBeInTheDocument();
+    expect(screen.getByText('Wontons')).toBeInTheDocument();
   });
 });

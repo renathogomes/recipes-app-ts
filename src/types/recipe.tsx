@@ -103,6 +103,10 @@ export type Recipe = {
   strDrink: string;
   strMealThumb: string;
   strDrinkThumb: string;
+  strYoutube: string;
+  strInstructions: string;
+  strAlcoholic?: string;
+  strCategory: string;
 };
 
 export type Category = {
