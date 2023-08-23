@@ -11,7 +11,6 @@ import RecipeInProgress from './pages/RecipeInProgress/RecipeInProgress';
 import Profile from './pages/Profile/Profile';
 import { CONTEXT_INITIAL_STATE, GlobalContextProvider } from './contexts/global.context';
 
-
 function App() {
   const location = useLocation();
   const hasFooter = location.pathname
