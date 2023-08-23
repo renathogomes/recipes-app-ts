@@ -1,0 +1,64 @@
+.btnSearch, .btnProfile {
+  background-color: transparent;
+  border: none;
+}
+
+.iconSearch, .iconProfile {
+  color: #41197f;
+  font-size: 10px;
+}
+
+.TopHeaderContainer {
+  background-color: #fcdc36;
+  display: flex;
+  height: 52px;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.heading {
+  color: #41197f;
+  font-size: 16px;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+
+.headerTitle {
+  align-items: center;
+  display: flex;
+  margin-left: 15px;
+}
+
+.icons {
+  display: flex;
+}
+
+.titleSpan {
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.subtitleSpan {
+  font-family: Oswald , sans-serif;
+  font-weight: 900;
+  margin-left: 1px;
+}
+
+.bottomHeaderContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.bottomHeading {
+  color: #41197f;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}

@@ -1,5 +1,6 @@
 import Header from '../../components/Header';
 import RecipesList from '../../components/RecipesList/RecipesList';
+import SearchBar from '../../components/SearchBar';
 import { CONTEXT_INITIAL_STATE,
   RecipeContext,
   RecipeContextProvider } from '../../contexts/recipes.context';

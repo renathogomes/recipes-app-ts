@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeSearchParams } from '../../types/recipe';
+import style from './SearchBar.module.css';
 
 export default function SearchInput() {
   const INITIAL_SEARCH_STATE: RecipeSearchParams = {
@@ -55,45 +56,7 @@ export default function SearchInput() {
   };
 
   return (
-    <>
-      <div>
-        <label>
-          <input
-            checked={ searchParams.type === 'i' }
-            type="radio"
-            id="type"
-            name="search"
-            value="i"
-            data-testid="ingredient-search-radio"
-            onChange={ handleChange }
-          />
-          Ingredient
-        </label>
-        <label>
-          <input
-            checked={ searchParams.type === 's' }
-            type="radio"
-            id="type"
-            name="search"
-            value="s"
-            data-testid="name-search-radio"
-            onChange={ handleChange }
-          />
-          Name
-        </label>
-        <label>
-          <input
-            checked={ searchParams.type === 'f' }
-            type="radio"
-            id="type"
-            name="search"
-            value="f"
-            data-testid="first-letter-search-radio"
-            onChange={ handleChange }
-          />
-          First letter
-        </label>
-      </div>
+    <div className={ style.searchContainer }>
       <input
         id="term"
         value={ searchParams.term }
@@ -101,15 +64,57 @@ export default function SearchInput() {
         type="text"
         placeholder="Buscar Receita"
         onChange={ handleChange }
+        className={ style.inputSearch }
       />
-      <button
-        type="button"
-        data-testid="exec-search-btn"
-        onClick={ handleClick }
-      >
-        Search
-      </button>
-    </>
+      <div>
+        <div className={ style.radioInputs }>
+          <label>
+            <input
+              checked={ searchParams.type === 'i' }
+              type="radio"
+              id="type"
+              name="search"
+              value="i"
+              data-testid="ingredient-search-radio"
+              onChange={ handleChange }
+            />
+            Ingredient
+          </label>
+          <label>
+            <input
+              checked={ searchParams.type === 's' }
+              type="radio"
+              id="type"
+              name="search"
+              value="s"
+              data-testid="name-search-radio"
+              onChange={ handleChange }
+            />
+            Name
+          </label>
+          <label>
+            <input
+              checked={ searchParams.type === 'f' }
+              type="radio"
+              id="type"
+              name="search"
+              value="f"
+              data-testid="first-letter-search-radio"
+              onChange={ handleChange }
+            />
+            First letter
+          </label>
+        </div>
+        <button
+          type="button"
+          data-testid="exec-search-btn"
+          onClick={ handleClick }
+          className={ style.btnComponent }
+        >
+          Search
+        </button>
+      </div>
+    </div>
 
   );
 }
