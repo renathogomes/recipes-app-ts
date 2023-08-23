@@ -59,8 +59,9 @@ function RecipeInProgress({ scope }: RecipesProps) {
   }, [recipeId]);
 
   const handleShare = () => {
-    const { location: { origin, pathname } } = window;
-    const url = `${origin}${pathname}`;
+    const { location: { origin } } = window;
+    const typeRecipe = recipe?.idMeal ? 'meals' : 'drinks';
+    const url = `${origin}/${typeRecipe}/${recipeId}`;
     navigator.clipboard.writeText(url);
     setIsShared(true);
   };
@@ -137,12 +138,14 @@ function RecipeInProgress({ scope }: RecipesProps) {
       />
       <ul>
         { ingredients.map((el, index) => (
-          <li
+          <label
+            htmlFor="ingredient"
+            data-testid={ `${index}-ingredient-step` }
             key={ index }
-            data-testid={ `${index}-ingredient-name-and-measure` }
           >
+            <input type="checkbox" id="ingredient" />
             { `${el.measure} ${el.ingredient}` }
-          </li>
+          </label>
         )) }
       </ul>
       <p data-testid="instructions">{ recipe?.strInstructions }</p>
