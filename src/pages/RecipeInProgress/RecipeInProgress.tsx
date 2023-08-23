@@ -13,6 +13,7 @@ export type RecipesProps = {
 type Ingredients = {
   measure: string;
   ingredient: string;
+  checked: boolean;
 };
 
 type Favorite = {
@@ -32,6 +33,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
   const [isShared, setIsShared] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favChanged, setFavChanged] = useState(false);
+  const [allCheckboxesChecked, setAllCheckboxesChecked] = useState(false);
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -44,6 +46,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
           const newObj = {
             measure: newRecipe[`strMeasure${entry[0].split('strIngredient')[1]}`],
             ingredient: entry[1],
+            checked: false,
           } as Ingredients;
           newIngredients.push(newObj);
         }
@@ -100,6 +103,17 @@ function RecipeInProgress({ scope }: RecipesProps) {
     setIsFavorite(isFav);
   }, [favChanged]);
 
+  const handleCheckboxChange = (index: any) => {
+    const updatedIngredients = [...ingredients];
+    updatedIngredients[index].checked = !updatedIngredients[index].checked;
+    setIngredients(updatedIngredients);
+  };
+
+  useEffect(() => {
+    const isAllChecked = ingredients.every((ingredient) => ingredient.checked);
+    setAllCheckboxesChecked(isAllChecked);
+  }, [ingredients]);
+
   return (
     <>
       <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>
@@ -142,15 +156,30 @@ function RecipeInProgress({ scope }: RecipesProps) {
             htmlFor="ingredient"
             data-testid={ `${index}-ingredient-step` }
             key={ index }
+            style={
+              el.checked
+                ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
+                : undefined
+            }
           >
-            <input type="checkbox" id="ingredient" />
+            <input
+              type="checkbox"
+              id="ingredient"
+              onChange={ () => handleCheckboxChange(index) }
+              checked={ el.checked }
+            />
             { `${el.measure} ${el.ingredient}` }
           </label>
         )) }
       </ul>
       <p data-testid="instructions">{ recipe?.strInstructions }</p>
       { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
-      <button data-testid="finish-recipe-btn">Finish Recipe</button>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={ !allCheckboxesChecked }
+      >
+        Finish Recipe
+      </button>
     </>
   );
 }
