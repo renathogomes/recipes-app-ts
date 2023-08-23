@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
@@ -34,6 +34,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favChanged, setFavChanged] = useState(false);
   const [allCheckboxesChecked, setAllCheckboxesChecked] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -114,6 +115,10 @@ function RecipeInProgress({ scope }: RecipesProps) {
     setAllCheckboxesChecked(isAllChecked);
   }, [ingredients]);
 
+  const handleFinishRecipe = () => {
+    navigate('/done-recipes');
+  };
+
   return (
     <>
       <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>
@@ -177,6 +182,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
       <button
         data-testid="finish-recipe-btn"
         disabled={ !allCheckboxesChecked }
+        onClick={ handleFinishRecipe }
       >
         Finish Recipe
       </button>
