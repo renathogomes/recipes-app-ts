@@ -134,6 +134,22 @@ function RecipeInProgress({ scope }: RecipesProps) {
 
   const handleFinishRecipe = () => {
     navigate('/done-recipes');
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+    if (!doneRecipes.some((element:any) => element.id === recipeId)) {
+      const newDoneRecipe = {
+        id: recipe?.idMeal || recipe?.idDrink,
+        type: recipe?.idMeal ? 'meal' : 'drink',
+        nationality: recipe?.strArea || '',
+        category: recipe?.strCategory,
+        alcoholicOrNot: recipe?.strAlcoholic || '',
+        name: recipe?.strMeal || recipe?.strDrink,
+        image: recipe?.strMealThumb || recipe?.strDrinkThumb,
+        doneDate: new Date().toISOString().split('T')[0],
+        tags: recipe?.strTags || [],
+      };
+      doneRecipes.push(newDoneRecipe);
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    }
   };
 
   return (
