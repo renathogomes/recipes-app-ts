@@ -57,6 +57,16 @@ function RecipeInProgress({ scope }: RecipesProps) {
       const isFav = favoriteRecipes.some((el: any) => el.id === newRecipe?.idMeal
         || el.id === newRecipe?.idDrink);
       setIsFavorite(isFav);
+      const inProgressRecipes = JSON
+        .parse(localStorage.getItem('inProgressRecipes') || '{}');
+      if (inProgressRecipes[recipeId]) {
+        const savedCheckboxStates = inProgressRecipes[recipeId].checkboxes;
+        newIngredients.forEach((ingredient, index) => {
+          ingredient.checked = savedCheckboxStates[index];
+        });
+      }
+
+      setIngredients(newIngredients);
     };
 
     getRecipe();
@@ -108,6 +118,13 @@ function RecipeInProgress({ scope }: RecipesProps) {
     const updatedIngredients = [...ingredients];
     updatedIngredients[index].checked = !updatedIngredients[index].checked;
     setIngredients(updatedIngredients);
+
+    const inProgressRecipes = JSON
+      .parse(localStorage.getItem('inProgressRecipes') || '{}');
+    inProgressRecipes[recipeId] = {
+      checkboxes: updatedIngredients.map((ingredient) => ingredient.checked),
+    };
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgressRecipes));
   };
 
   useEffect(() => {
