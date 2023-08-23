@@ -7,6 +7,7 @@ import Recipes from './pages/Recipes';
 import { RecipeScope } from './types/recipe';
 import RecipeDetails from './pages/RecipeDetails/RecipeDetails';
 import { Footer } from './components/Footer/Footer';
+import RecipeInProgress from './pages/RecipeInProgress/RecipeInProgress';
 import Profile from './pages/Profile/Profile';
 import { CONTEXT_INITIAL_STATE, GlobalContextProvider } from './contexts/global.context';
 
@@ -33,11 +34,11 @@ function App() {
         />
         <Route
           path="/meals/:recipeId/in-progress"
-          element={ <h2>meal in progress</h2> }
+          element={ <RecipeInProgress scope={ 'meals' as RecipeScope } /> }
         />
         <Route
           path="/drinks/:recipeId/in-progress"
-          element={ <h2>drink in progress</h2> }
+          element={ <RecipeInProgress scope={ 'drinks' as RecipeScope } /> }
         />
         <Route
           path="/profile"

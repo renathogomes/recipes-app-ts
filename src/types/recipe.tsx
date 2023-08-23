@@ -108,6 +108,7 @@ export type Recipe = {
   strAlcoholic?: string;
   strCategory: string;
   strArea: string;
+  strTags: string;
 };
 
 export type Category = {
