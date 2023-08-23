@@ -37,6 +37,7 @@ function Login() {
 
   return (
     <div className={ style.container }>
+      <img src="src/icons/login.svg" alt="" />
       <h1 className={ style.heading }>Login</h1>
       <input
         className={ style.inputLogin }

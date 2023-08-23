@@ -82,3 +82,20 @@
   letter-spacing: 1px;
   padding-top: 5px;
 }
+
+.bottomHeaderContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.bottomHeading {
+  color: #41197f;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+

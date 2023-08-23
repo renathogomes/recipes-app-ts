@@ -69,6 +69,10 @@ function RecipesList() {
 
   return (
     <div>
+      <div className={ style.bottomHeaderContainer }>
+        <img src={ `src/images/${state.scope}.svg` } alt="" />
+        <h2 className={ style.bottomHeading }>{state.scope}</h2>
+      </div>
       <div className={ style.btnIconsContainer }>
         { categories.map((category) => (
           <div key={ category.strCategory } className={ style.btnContainer }>
@@ -79,7 +83,8 @@ function RecipesList() {
               className={ style.btnIcons }
             >
               <img
-                src={ `src/icons/${category.strCategory}.svg` }
+                src={ category.strCategory === 'Other / Unknown'
+                  ? 'src/icons/Other.svg' : `src/icons/${category.strCategory}.svg` }
                 alt=""
                 className={ `bodyIcons i${category.strCategory}` }
                 style={ { width: '46px', height: '46px' } }
@@ -94,7 +99,7 @@ function RecipesList() {
           className={ style.btnIconsAll }
         >
           <img
-            src={ mealImg }
+            src={ `src/icons/${state.scope}.svg` }
             alt=""
             className={ style.bodyIcons }
           />
