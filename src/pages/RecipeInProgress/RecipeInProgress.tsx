@@ -144,8 +144,8 @@ function RecipeInProgress({ scope }: RecipesProps) {
         alcoholicOrNot: recipe?.strAlcoholic || '',
         name: recipe?.strMeal || recipe?.strDrink,
         image: recipe?.strMealThumb || recipe?.strDrinkThumb,
-        doneDate: new Date().toISOString().split('T')[0],
-        tags: recipe?.strTags || [],
+        doneDate: new Date().toISOString(),
+        tags: recipe?.strTags === null ? [] : recipe?.strTags.split(','),
       };
       doneRecipes.push(newDoneRecipe);
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
@@ -216,6 +216,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         data-testid="finish-recipe-btn"
         disabled={ !allCheckboxesChecked }
         onClick={ handleFinishRecipe }
+        style={ { position: 'fixed', bottom: '0', right: '0' } }
       >
         Finish Recipe
       </button>
