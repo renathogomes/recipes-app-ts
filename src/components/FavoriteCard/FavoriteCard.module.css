@@ -1,0 +1,19 @@
+.container {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  width: 30vw;
+}
+
+.recipeImg {
+  width: 100%;
+}
+
+.navigateBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+}

@@ -69,9 +69,9 @@ function RecipesList() {
   return (
     <div>
       <div>
-        { categories.map((category) => (
+        { categories.map((category, index) => (
           <button
-            key={ category.strCategory }
+            key={ index }
             data-testid={ `${category.strCategory}-category-filter` }
             onClick={ () => selectCategory(category) }
           >
