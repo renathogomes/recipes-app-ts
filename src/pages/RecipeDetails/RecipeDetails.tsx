@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
-import emptyHeart from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
+import style from './RecipeDetails.module.css';
+import share from '../../images/Share.svg';
 
 export type RecipesProps = {
   scope: RecipeScope;
@@ -101,27 +102,63 @@ function RecipeDetails({ scope }: RecipesProps) {
 
   return (
     <>
-      <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>
+      <button
+        onClick={ () => handleShare() }
+        data-testid="share-btn"
+        className={ style.btnShare }
+      >
+        <img
+          src={ share }
+          alt=""
+          className={ style.iconShare }
+        />
+      </button>
       { isShared && <p>Link copied!</p> }
       { isFavorite
         ? (
-          <button onClick={ () => handleFavorite() }>
+          <button
+            onClick={ () => handleFavorite() }
+            className={ style.btnFav }
+          >
             <img
               data-testid="favorite-btn"
               src={ heart }
               alt="favorite"
+              className={ style.iconFav }
             />
           </button>)
         : (
-          <button onClick={ () => handleFavorite() }>
+          <button
+            onClick={ () => handleFavorite() }
+            className={ style.btnFav }
+          >
             <img
               data-testid="favorite-btn"
-              src={ emptyHeart }
-              alt="favorite"
+              src={ heart }
+              alt=""
+              className={ style.iconFav }
             />
           </button>) }
-      <h1 data-testid="recipe-title">{ recipe?.strMeal || recipe?.strDrink }</h1>
-      <h2 data-testid="recipe-category">{ recipe?.strCategory }</h2>
+      <img
+        className={ style.recipeImg }
+        data-testid="recipe-photo"
+        src={ recipe?.strDrinkThumb || recipe?.strMealThumb }
+        alt="recipe thumbnail"
+      />
+      <div className={ style.titlesContainer }>
+        <h1
+          data-testid="recipe-title"
+          className={ style.recipeTitle }
+        >
+          { recipe?.strMeal || recipe?.strDrink }
+        </h1>
+        <h2
+          data-testid="recipe-category"
+          className={ style.recipeCategory }
+        >
+          { recipe?.strCategory }
+        </h2>
+      </div>
       {
         recipe?.strAlcoholic
         && (
@@ -129,13 +166,8 @@ function RecipeDetails({ scope }: RecipesProps) {
             { recipe?.strAlcoholic }
           </h5>)
       }
-      <img
-        style={ { width: '200px' } }
-        data-testid="recipe-photo"
-        src={ recipe?.strDrinkThumb || recipe?.strMealThumb }
-        alt="recipe thumbnail"
-      />
-      <ul>
+      <h2 className={ style.heading }>Ingredients</h2>
+      <ul className={ style.ingredientsList }>
         { ingredients.map((el, index) => (
           <li
             key={ index }
@@ -145,8 +177,15 @@ function RecipeDetails({ scope }: RecipesProps) {
           </li>
         )) }
       </ul>
-      <p data-testid="instructions">{ recipe?.strInstructions }</p>
-      { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
+      <h2 className={ style.heading }>Instructions</h2>
+      <p
+        data-testid="instructions"
+        className={ style.instructions }
+      >
+        { recipe?.strInstructions }
+      </p>
+      <h2 className={ style.heading }>Video</h2>
+      { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="340" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
     </>
   );
 }

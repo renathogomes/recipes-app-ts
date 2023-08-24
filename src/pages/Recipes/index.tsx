@@ -23,7 +23,7 @@ function Recipes({ scope }: RecipesProps) {
         } },
       } }
     >
-      <Header pageTitle={ `Recipes - ${capitalize(scope)}` } />
+      <Header pageTitle={ capitalize(scope) } />
       <RecipesList />
     </RecipeContextProvider>
   );

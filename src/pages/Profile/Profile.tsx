@@ -32,10 +32,6 @@ function Profile() {
         searchIcon={ false }
       />
       <div className={ style.profileContainer }>
-        <div className={ style.bottomHeaderContainer }>
-          <img src="src/icons/Profile.svg" alt="" />
-          <h2 className={ style.bottomHeading }>profile</h2>
-        </div>
         <span
           data-testid="profile-email"
           className={ style.spanEmail }

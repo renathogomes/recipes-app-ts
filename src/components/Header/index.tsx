@@ -7,12 +7,14 @@ import trayImg from '../../images/tray.svg';
 import SearchInput from '../SearchBar';
 
 type HeaderProps = {
+  pageTitle: string,
   searchIcon?: boolean;
 };
 
-export default function Header({ searchIcon = true }: HeaderProps) {
+export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
   const [searchOn, setSearchOn] = useState(false);
   const navigate = useNavigate();
+  console.log(pageTitle);
   return (
     <header className={ style.headerContainer }>
       <div className={ style.TopHeaderContainer }>
@@ -36,6 +38,10 @@ export default function Header({ searchIcon = true }: HeaderProps) {
         </div>
       </div>
       { searchOn && <SearchInput /> }
+      <div className={ style.bottomHeaderContainer }>
+        <img src={ `src/icons/${pageTitle}.svg` } alt="" />
+        <h2 className={ style.bottomHeading }>{pageTitle}</h2>
+      </div>
     </header>
   );
 }

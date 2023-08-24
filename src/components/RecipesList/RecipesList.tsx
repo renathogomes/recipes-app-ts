@@ -4,7 +4,6 @@ import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Category, Recipe } from '../../types/recipe';
 import style from './RecipesList.module.css';
-import mealImg from '../../images/mealIcon3.svg';
 
 function RecipesList() {
   const { state, update } = useContext(RecipeContext);
@@ -69,10 +68,6 @@ function RecipesList() {
 
   return (
     <div>
-      <div className={ style.bottomHeaderContainer }>
-        <img src={ `src/images/${state.scope}.svg` } alt="" />
-        <h2 className={ style.bottomHeading }>{state.scope}</h2>
-      </div>
       <div className={ style.btnIconsContainer }>
         { categories.map((category) => (
           <div key={ category.strCategory } className={ style.btnContainer }>
@@ -99,7 +94,7 @@ function RecipesList() {
           className={ style.btnIconsAll }
         >
           <img
-            src={ `src/icons/${state.scope}.svg` }
+            src={ `src/images/${state.scope}All.svg` }
             alt=""
             className={ style.bodyIcons }
           />

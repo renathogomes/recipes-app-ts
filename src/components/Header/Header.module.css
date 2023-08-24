@@ -49,3 +49,43 @@
   font-weight: 900;
   margin-left: 1px;
 }
+
+.bottomHeaderContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+.bottomHeading {
+  color: #41197f;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-top: 10px;
+  text-transform: uppercase;
+}
+
+@media only screen and ( min-width : 700px ) {
+
+  .cardContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 80%;
+  }
+
+  .btnIconsContainer {
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media only screen and ( min-width : 990px ) {
+
+  .TopHeaderContainer {
+    padding: 0 50px;
+  }
+}
