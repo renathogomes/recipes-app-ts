@@ -26,6 +26,8 @@
 
 .headerTitle {
   align-items: center;
+  background-color: transparent;
+  border: none;
   display: flex;
   margin-left: 15px;
 }
