@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import emptyHeart from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
+import { Recommended } from '../../components/Recommended.tesx';
 
 export type RecipesProps = {
   scope: RecipeScope;
@@ -32,6 +32,8 @@ function RecipeDetails({ scope }: RecipesProps) {
   const [isShared, setIsShared] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favChanged, setFavChanged] = useState(false);
+
+  console.log(recipeId);
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -99,6 +101,8 @@ function RecipeDetails({ scope }: RecipesProps) {
     setIsFavorite(isFav);
   }, [favChanged]);
 
+  const recommendedSearch = recipe?.strMeal || recipe?.strDrink;
+
   return (
     <>
       <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>
@@ -147,6 +151,10 @@ function RecipeDetails({ scope }: RecipesProps) {
       </ul>
       <p data-testid="instructions">{ recipe?.strInstructions }</p>
       { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
+      <Recommended
+        type={ scope }
+        term={ recipe?.strMeal || recipe?.strDrink as string }
+      />
     </>
   );
 }
