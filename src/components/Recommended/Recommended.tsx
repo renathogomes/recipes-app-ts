@@ -11,7 +11,6 @@ type DetailsRecipe = {
 };
 
 export function Recommended({ type, term }: DetailsRecipe) {
-  console.log(term);
   const navigate = useNavigate();
 
   const [data, setData] = useState<Recipe[]>([]);
@@ -23,10 +22,6 @@ export function Recommended({ type, term }: DetailsRecipe) {
     };
     getRecommended();
   }, []);
-
-  const handleClick = () => {
-    navigate(`/${type}/:recipeId/in-progress`);
-  };
 
   return (
     <div>
@@ -140,13 +135,6 @@ export function Recommended({ type, term }: DetailsRecipe) {
               </ul>
             </article>
           )))}
-        <button
-          className={ style.startRecipe }
-          data-testid="start-recipe-btn"
-          onClick={ handleClick }
-        >
-          Start Recipe
-        </button>
       </div>
     </div>
   );

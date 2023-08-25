@@ -79,6 +79,9 @@ describe('Testes referentes ao componente RecipesList', async () => {
         json: async () => mockRecipeCategories,
       })
       .mockResolvedValueOnce({
+        json: async () => mockSearchMeal,
+      })
+      .mockResolvedValueOnce({
         json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
       });
     renderWithRouter(<App />, { route: '/meals' });
@@ -86,7 +89,7 @@ describe('Testes referentes ao componente RecipesList', async () => {
       const cardButton = screen.getByTestId('0-recipe-card');
       await userEvent.click(cardButton);
     });
-    expect(global.fetch).toHaveBeenCalledTimes(3);
+    expect(global.fetch).toHaveBeenCalledTimes(4);
     expect(screen.getByTestId('recipe-title')).toHaveTextContent('Corba');
   });
 });

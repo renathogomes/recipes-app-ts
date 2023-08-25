@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import emptyHeart from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
-import { Recommended } from '../../components/Recommended.tesx/Recommended';
+import { Recommended } from '../../components/Recommended/Recommended';
+
+import style from './RecipeDetails.module.css';
 
 export type RecipesProps = {
   scope: RecipeScope;
@@ -33,7 +35,7 @@ function RecipeDetails({ scope }: RecipesProps) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favChanged, setFavChanged] = useState(false);
 
-  console.log(recipeId);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -101,6 +103,10 @@ function RecipeDetails({ scope }: RecipesProps) {
     setIsFavorite(isFav);
   }, [favChanged]);
 
+  const handleClick = () => {
+    navigate(`/${scope}/${recipeId}/in-progress`);
+  };
+
   return (
     <>
       <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>
@@ -153,6 +159,13 @@ function RecipeDetails({ scope }: RecipesProps) {
         type={ scope }
         term={ recipe?.strMeal || recipe?.strDrink as string }
       />
+      <button
+        className={ style.startRecipe }
+        data-testid="start-recipe-btn"
+        onClick={ handleClick }
+      >
+        Start Recipe
+      </button>
     </>
   );
 }

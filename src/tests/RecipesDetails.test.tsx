@@ -5,6 +5,7 @@ import { renderWithRouter } from '../helpers/renderWithRouter';
 import mockSearchMeal from './mocks/mockSearchMeal';
 import { mockRecipeCategories } from './mocks/mockRecipesList';
 import App from '../App';
+import mockSearchDrink from './mocks/mockSearchDrink';
 
 const CORBA_IMG = 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg';
 
@@ -71,10 +72,13 @@ describe('Testes referentes ao componente RecipesDetails', () => {
 
   test('Verifica se o Card é gerado com as informaçoes corretas', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
-      json: async () => mockSearchMeal,
-    });
+      json: async () => mockSearchDrink,
+    })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      });
     renderWithRouter(<App />, { route: MEAL_ROUTE });
-    expect(global.fetch).toBeCalledTimes(1);
+    expect(global.fetch).toBeCalledTimes(2);
     await waitFor(() => expect(screen.getByTestId('recipe-title')).toHaveTextContent('Corba'));
     expect(screen.getByTestId('recipe-category')).toHaveTextContent('Dessert');
     expect(screen.getByTestId('recipe-photo')).toHaveAttribute('src', CORBA_IMG);
@@ -82,19 +86,24 @@ describe('Testes referentes ao componente RecipesDetails', () => {
 
   test('Verifica se gera o Card de forma correta ao receber uma bebida', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    }).mockResolvedValueOnce({
       json: async () => MOCK_DRINK,
     });
     renderWithRouter(<App />, { route: '/drinks/15997' });
-    expect(global.fetch).toBeCalledTimes(1);
+    expect(global.fetch).toBeCalledTimes(2);
     await waitFor(() => expect(screen.getByTestId('recipe-title')).toHaveTextContent('GG'));
   });
 
-  test('Verifica se ao clilcar em compartilhar o link da pagina é copiado para o clipboard', async () => {
+  test('Verifica se ao clicar em compartilhar o link da pagina é copiado para o clipboard', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
-      json: async () => mockSearchMeal,
-    });
+      json: async () => mockSearchDrink,
+    })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      });
     renderWithRouter(<App />, { route: MEAL_ROUTE });
-    expect(global.fetch).toBeCalledTimes(1);
+    expect(global.fetch).toBeCalledTimes(2);
     await userEvent.click(screen.getByTestId('share-btn'));
     const pastedText = await navigator.clipboard.readText();
     expect(pastedText).toBe('http://localhost:3000/meals/52977');
@@ -102,10 +111,13 @@ describe('Testes referentes ao componente RecipesDetails', () => {
 
   test('Verifica se ao clicar no botão de favoritar a receita é adicionada ao localstorage, e se ela ja existir é removida', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
-      json: async () => mockSearchMeal,
-    });
+      json: async () => mockSearchDrink,
+    })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      });
     renderWithRouter(<App />, { route: MEAL_ROUTE });
-    expect(global.fetch).toBeCalledTimes(1);
+    expect(global.fetch).toBeCalledTimes(2);
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(null);
     await userEvent.click(screen.getByTestId(FAVORITE_BTN));
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(JSON.stringify(EXPECTED_FAV));
@@ -115,8 +127,11 @@ describe('Testes referentes ao componente RecipesDetails', () => {
 
   test('Verifica se ao existir duas receitas como favoritas e remover uma, a outra permanece', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
-      json: async () => mockSearchMeal,
-    });
+      json: async () => mockSearchDrink,
+    })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      });
     renderWithRouter(<App />, { route: MEAL_ROUTE });
     window.localStorage.setItem('favoriteRecipes', JSON.stringify(MOCK_FAV));
     await userEvent.click(screen.getByTestId(FAVORITE_BTN));
@@ -125,13 +140,29 @@ describe('Testes referentes ao componente RecipesDetails', () => {
 
   test('Verifica se é possivel favoritar um drink', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    }).mockResolvedValueOnce({
       json: async () => MOCK_DRINK,
     });
     renderWithRouter(<App />, { route: '/drinks/15997' });
-    expect(global.fetch).toBeCalledTimes(1);
+    expect(global.fetch).toBeCalledTimes(2);
     window.localStorage.removeItem('favoriteRecipes');
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(null);
     await userEvent.click(screen.getByTestId(FAVORITE_BTN));
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(JSON.stringify([EXPECTED_FAV_DRINK[0]]));
+  });
+  test('Verifica se é redirecionado ao clicar em Start Recipe', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    });
+    renderWithRouter(<App />, { route: '/meals/52977' });
+    expect(global.fetch).toBeCalledTimes(2);
+    await userEvent.click(screen.getByTestId('start-recipe-btn'));
+    expect(global.fetch).toBeCalledTimes(3);
+    expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
   });
 });

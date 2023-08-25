@@ -3,13 +3,6 @@
     padding: 0;
 }
 
-.startRecipe {
-    position: fixed;
-    bottom: 0px;
-    right: auto;
-    left: auto;
-}
-
 .carousel {
     display: flex;
     gap: 1rem;
