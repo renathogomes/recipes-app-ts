@@ -4,7 +4,7 @@ import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import emptyHeart from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
-import { Recommended } from '../../components/Recommended.tesx';
+import { Recommended } from '../../components/Recommended.tesx/Recommended';
 
 export type RecipesProps = {
   scope: RecipeScope;
