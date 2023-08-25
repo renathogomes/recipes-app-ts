@@ -101,8 +101,6 @@ function RecipeDetails({ scope }: RecipesProps) {
     setIsFavorite(isFav);
   }, [favChanged]);
 
-  const recommendedSearch = recipe?.strMeal || recipe?.strDrink;
-
   return (
     <>
       <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>

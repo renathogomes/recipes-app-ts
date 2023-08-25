@@ -28,8 +28,6 @@ export function Recommended({ type, term }: DetailsRecipe) {
     navigate(`/${type}/:recipeId/in-progress`);
   };
 
-  console.log(type);
-
   return (
     <div>
       <h2>Recommended</h2>
