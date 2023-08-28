@@ -5,15 +5,19 @@ import { renderWithRouter } from './helpers/renderWith';
 import App from '../App';
 import { Footer } from '../components/Footer/Footer';
 import { mockRecipeCategories } from './mocks/mockRecipesList';
+import mockSearchMeal from './mocks/mockSearchMeal';
 
 afterEach(() => {
   vi.clearAllMocks();
 });
 
 beforeEach(() => {
-  global.fetch = vi.fn().mockResolvedValue({
-    json: async () => mockRecipeCategories,
-  });
+  global.fetch = vi.fn().mockResolvedValueOnce({
+    json: async () => mockSearchMeal,
+  })
+    .mockResolvedValueOnce({
+      json: async () => mockRecipeCategories,
+    });
   window.alert = vi.fn();
 });
 

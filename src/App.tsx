@@ -11,13 +11,13 @@ import RecipeInProgress from './pages/RecipeInProgress/RecipeInProgress';
 import Profile from './pages/Profile/Profile';
 import { CONTEXT_INITIAL_STATE, GlobalContextProvider } from './contexts/global.context';
 import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
+import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   const location = useLocation();
-  const hasFooter = location.pathname
-    .startsWith('/meals') || location.pathname
-    .startsWith('/drinks') || location.pathname
-    .startsWith('/profile');
+  const hasFooter = location.pathname.startsWith('/meals')
+    || location.pathname.startsWith('/drinks')
+    || location.pathname.startsWith('/profile');
 
   return (
     <GlobalContextProvider value={ CONTEXT_INITIAL_STATE }>
@@ -56,10 +56,7 @@ function App() {
         <Route
           path="/favorite-recipes"
           element={
-            <Header
-              pageTitle="Favorite Recipes"
-              searchIcon={ false }
-            />
+            <FavoriteRecipes />
           }
         />
       </Routes>

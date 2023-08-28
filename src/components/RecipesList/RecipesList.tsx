@@ -68,30 +68,48 @@ function RecipesList() {
 
   return (
     <div>
-      <div>
+      <div className={ style.btnIconsContainer }>
         { categories.map((category) => (
-          <button
-            key={ category.strCategory }
-            data-testid={ `${category.strCategory}-category-filter` }
-            onClick={ () => selectCategory(category) }
-          >
-            { category.strCategory }
-          </button>
+          <div key={ category.strCategory } className={ style.btnContainer }>
+            <button
+              key={ category.strCategory }
+              data-testid={ `${category.strCategory}-category-filter` }
+              onClick={ () => selectCategory(category) }
+              className={ style.btnIcons }
+            >
+              <img
+                src={ category.strCategory === 'Other / Unknown'
+                  ? 'src/icons/Other.svg' : `src/icons/${category.strCategory}.svg` }
+                alt=""
+                className={ `bodyIcons i${category.strCategory}` }
+                style={ { width: '46px', height: '46px' } }
+              />
+            </button>
+            <span className={ style.subtitle }>{category.strCategory}</span>
+          </div>
         )) }
         <button
           data-testid="All-category-filter"
           onClick={ () => selectCategory() }
+          className={ style.btnIconsAll }
         >
-          All
-
+          <img
+            src={ `src/images/${state.scope}All.svg` }
+            alt=""
+            className={ style.bodyIcons }
+          />
+          <span className={ style.subtitle }>All</span>
         </button>
       </div>
-      <div>
+      <div className={ style.cardContainer }>
         { state.recipes.map((recipe, index) => (
-          <div key={ recipe.idDrink || recipe.idMeal }>
+          <div
+            key={ recipe.idDrink || recipe.idMeal }
+            className={ style.cardContainer }
+          >
             <button
               onClick={ () => cardClick(recipe) }
-              className={ style.wrapper }
+              className={ style.card }
               data-testid={ `${index}-recipe-card` }
             >
               <img
