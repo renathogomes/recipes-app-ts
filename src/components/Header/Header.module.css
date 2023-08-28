@@ -1,6 +1,13 @@
-.btnSearch, .btnProfile {
+.btnSearch {
   background-color: transparent;
   border: none;
+  margin-right: 8px;
+}
+
+.btnProfile {
+  background-color: transparent;
+  border: none;
+  margin-right: 10px;
 }
 
 .iconSearch, .iconProfile {

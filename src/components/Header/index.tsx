@@ -14,7 +14,7 @@ type HeaderProps = {
 export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
   const [searchOn, setSearchOn] = useState(false);
   const navigate = useNavigate();
-  console.log(pageTitle);
+
   return (
     <header className={ style.headerContainer }>
       <div className={ style.TopHeaderContainer }>
