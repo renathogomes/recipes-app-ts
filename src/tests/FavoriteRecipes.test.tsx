@@ -120,9 +120,9 @@ describe('Testes referentes ao componente RecipesDetails', () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
       json: async () => mockSearchDrink,
     })
-    .mockResolvedValueOnce({
-      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
-    });
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      });
     window.localStorage.setItem('favoriteRecipes', JSON.stringify(MOCK_FAV));
     renderWithRouter(<App />, { route: FAVORITE_RECIPES });
     await userEvent.click(screen.getByTestId(/0-horizontal-image/i));
