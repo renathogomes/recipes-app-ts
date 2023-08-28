@@ -59,17 +59,17 @@
 }
 
 .heading {
-  padding: 20px 0 0 20px;
   font-weight: 600;
+  padding: 20px 0 0 20px;
 }
 
 .ingredientsList {
-  padding: 5px 30px;
-  margin: 5px 15px;
   border: 1px solid #b1b1b1;
   border-radius: 5px;
-  line-height: 30px;
   color: #1a1b1c;
+  line-height: 30px;
+  margin: 5px 15px;
+  padding: 5px 30px;
 }
 
 .instructions {
@@ -83,7 +83,4 @@
 iframe {
   margin: 0 5vw;
   width: 90%;
-}
-
-.btnsContainer {
 }
