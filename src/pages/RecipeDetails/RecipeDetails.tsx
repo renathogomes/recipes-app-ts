@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import heart from '../../images/blackHeartIcon.svg';
+import emptyHeart from '../../images/whiteHeartIcon.svg';
 import { Recommended } from '../../components/Recommended/Recommended';
 import style from './RecipeDetails.module.css';
 import share from '../../images/Share.svg';
@@ -140,7 +141,7 @@ function RecipeDetails({ scope }: RecipesProps) {
           >
             <img
               data-testid="favorite-btn"
-              src={ heart }
+              src={ emptyHeart }
               alt=""
               className={ style.iconFav }
             />
@@ -194,7 +195,6 @@ function RecipeDetails({ scope }: RecipesProps) {
       { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="340" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
       <Recommended
         type={ scope }
-        term={ recipe?.strMeal || recipe?.strDrink as string }
       />
       <button
         className={ style.startRecipe }

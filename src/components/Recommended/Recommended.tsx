@@ -26,7 +26,7 @@ export function Recommended({ type }: DetailsRecipe) {
         id="carouselDrinks"
         className={ style.carousel }
       >
-        {type === 'meals' ? (
+        { type === 'meals' ? (
           data.slice(0, 6).map((drink, index) => (
             <article
               key={ index }
@@ -42,53 +42,53 @@ export function Recommended({ type }: DetailsRecipe) {
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strAlcoholic}
-                  </li>)}
-                {drink.strArea && (
+                    { drink.strAlcoholic }
+                  </li>) }
+                { drink.strArea && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strArea}
-                  </li>)}
-                {drink.strCategory && (
+                    { drink.strArea }
+                  </li>) }
+                { drink.strCategory && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strCategory}
-                  </li>)}
-                {drink.strDrink && (
+                    { drink.strCategory }
+                  </li>) }
+                { drink.strDrink && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strDrink}
-                  </li>)}
-                {drink.strInstructions && (
+                    { drink.strDrink }
+                  </li>) }
+                { drink.strInstructions && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strInstructions}
-                  </li>)}
-                {drink.strMeal && (
+                    { drink.strInstructions }
+                  </li>) }
+                { drink.strMeal && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strMeal}
+                    { drink.strMeal }
 
-                  </li>)}
-                {drink.strMealThumb && (
+                  </li>) }
+                { drink.strMealThumb && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strMealThumb}
+                    { drink.strMealThumb }
 
-                  </li>)}
-                {drink.strTags && (
+                  </li>) }
+                { drink.strTags && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {drink.strTags}
+                    { drink.strTags }
 
-                  </li>)}
+                  </li>) }
               </ul>
             </article>
           ))) : (
@@ -103,34 +103,34 @@ export function Recommended({ type }: DetailsRecipe) {
                 data-testid={ `${index}-recommendation-card` }
               />
               <ul>
-                {meal.strCategory && (
+                { meal.strCategory && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {meal.strCategory}
-                  </li>)}
-                {meal.strMeal && (
+                    { meal.strCategory }
+                  </li>) }
+                { meal.strMeal && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {meal.strMeal}
-                  </li>)}
-                {meal.strInstructions && (
+                    { meal.strMeal }
+                  </li>) }
+                { meal.strInstructions && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {meal.strInstructions}
-                  </li>)}
-                {meal.strTags && (
+                    { meal.strInstructions }
+                  </li>) }
+                { meal.strTags && (
                   <li
                     data-testid={ `${index}-recommendation-title` }
                   >
-                    {meal.strTags}
+                    { meal.strTags }
 
-                  </li>)}
+                  </li>) }
               </ul>
             </article>
-          )))}
+          ))) }
       </div>
     </div>
   );
