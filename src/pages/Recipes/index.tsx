@@ -1,5 +1,6 @@
 import Header from '../../components/Header';
 import RecipesList from '../../components/RecipesList/RecipesList';
+import SearchBar from '../../components/SearchBar';
 import { CONTEXT_INITIAL_STATE,
   RecipeContextProvider } from '../../contexts/recipes.context';
 import { capitalize } from '../../helpers/capitalize';
@@ -20,7 +21,7 @@ function Recipes({ scope }: RecipesProps) {
         } },
       } }
     >
-      <Header pageTitle={ `Recipes - ${capitalize(scope)}` } />
+      <Header pageTitle={ capitalize(scope) } />
       <RecipesList />
     </RecipeContextProvider>
   );
