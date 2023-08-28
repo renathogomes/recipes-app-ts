@@ -49,12 +49,12 @@ export default function DoneRecipeCard() {
             >
               { doneDate }
             </h5>
-            {recipe.tags.map((tag) => (
+            {recipe.tags.map((tagName) => (
               <h6
-                key={ tag }
-                data-testid={ `${index}-${tag}-horizontal-tag` }
+                key={ tagName }
+                data-testid={ `${index}-${tagName}-horizontal-tag` }
               >
-                {tag}
+                {tagName}
               </h6>
             ))}
             <button
