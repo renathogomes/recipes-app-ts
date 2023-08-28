@@ -1,10 +1,10 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import mockSearchMeal from './mocks/mockSearchMeal';
-import { mockRecipeCategories } from './mocks/mockRecipesList';
 import App from '../App';
+import mockSearchDrink from './mocks/mockSearchDrink';
 
 const CORBA_IMG = 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg';
 
@@ -118,6 +118,9 @@ describe('Testes referentes ao componente RecipesDetails', () => {
 
   test('Verifica se ao clicar na imagem ele redireciona para a pagina de detalhes', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchDrink,
+    })
+    .mockResolvedValueOnce({
       json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
     });
     window.localStorage.setItem('favoriteRecipes', JSON.stringify(MOCK_FAV));

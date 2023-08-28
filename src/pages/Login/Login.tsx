@@ -7,7 +7,7 @@ function Login() {
   const [inputEmail, setInputEmail] = useState('');
   const [inputPass, setInputPass] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
-  const { state, update } = useContext(GlobalContext);
+  const { update } = useContext(GlobalContext);
   const navigate = useNavigate();
   const validateEmail = /\S+@\S+\.\S+/;
 

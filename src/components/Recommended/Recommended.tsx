@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import { FoodService } from '../../services/services';
 
 import style from './Recommended.module.css';
 
 type DetailsRecipe = {
-  type: RecipeScope,
-  term: string,
+  type: RecipeScope
 };
 
-export function Recommended({ type, term }: DetailsRecipe) {
-  const navigate = useNavigate();
-
+export function Recommended({ type }: DetailsRecipe) {
   const [data, setData] = useState<Recipe[]>([]);
   useEffect(() => {
     const getRecommended = async () => {

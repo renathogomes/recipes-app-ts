@@ -1,7 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import RecipesList from '../components/RecipesList/RecipesList';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import mockSearchMeal from './mocks/mockSearchMeal';
 import { mockRecipeCategories } from './mocks/mockRecipesList';
