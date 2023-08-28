@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 export type RecipeSearchType = 'i' | 's' | 'f';
 
 export enum RecipeSearchTypeEnum {
@@ -24,6 +22,25 @@ export type RecipeContextState = {
 export type RecipeContextType = {
   state: RecipeContextState;
   update: (data: Partial<RecipeContextState>) => void;
+};
+
+export type Recipe = {
+  idMeal: string;
+  idDrink: string;
+  strMeal: string;
+  strDrink: string;
+  strMealThumb: string;
+  strDrinkThumb: string;
+  strYoutube: string;
+  strInstructions: string;
+  strAlcoholic?: string;
+  strCategory: string;
+  strArea: string;
+  strTags: string;
+};
+
+export type Category = {
+  strCategory: string;
 };
 
 // export type Recipe = {
@@ -95,22 +112,3 @@ export type RecipeContextType = {
 //   strIngredient19: string;
 //   strIngredient20: string;
 // };
-
-export type Recipe = {
-  idMeal: string;
-  idDrink: string;
-  strMeal: string;
-  strDrink: string;
-  strMealThumb: string;
-  strDrinkThumb: string;
-  strYoutube: string;
-  strInstructions: string;
-  strAlcoholic?: string;
-  strCategory: string;
-  strArea: string;
-  strTags: string;
-};
-
-export type Category = {
-  strCategory: string;
-};

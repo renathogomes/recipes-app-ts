@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { RecipeContext } from '../../contexts/recipes.context';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import heart from '../../images/blackHeartIcon.svg';
+import emptyHeart from '../../images/whiteHeartIcon.svg';
+import { Recommended } from '../../components/Recommended/Recommended';
 import style from './RecipeDetails.module.css';
 import share from '../../images/Share.svg';
 
@@ -33,6 +34,8 @@ function RecipeDetails({ scope }: RecipesProps) {
   const [isShared, setIsShared] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favChanged, setFavChanged] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -100,6 +103,10 @@ function RecipeDetails({ scope }: RecipesProps) {
     setIsFavorite(isFav);
   }, [favChanged]);
 
+  const handleClick = () => {
+    navigate(`/${scope}/${recipeId}/in-progress`);
+  };
+
   return (
     <>
       <button
@@ -134,7 +141,7 @@ function RecipeDetails({ scope }: RecipesProps) {
           >
             <img
               data-testid="favorite-btn"
-              src={ heart }
+              src={ emptyHeart }
               alt=""
               className={ style.iconFav }
             />
@@ -186,6 +193,16 @@ function RecipeDetails({ scope }: RecipesProps) {
       </p>
       <h2 className={ style.heading }>Video</h2>
       { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="340" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
+      <Recommended
+        type={ scope }
+      />
+      <button
+        className={ style.startRecipe }
+        data-testid="start-recipe-btn"
+        onClick={ handleClick }
+      >
+        Start Recipe
+      </button>
     </>
   );
 }
