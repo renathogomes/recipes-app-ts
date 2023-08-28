@@ -9,7 +9,16 @@ export type GlobalContextType = {
 };
 export type GlobalContextState = {
   user: User;
-  favoriteRecipes: Recipe[];
+  favoriteRecipes: Favorite[];
   finishedRecipes: Recipe[];
   inProgressRecipes: Recipe[];
+};
+export type Favorite = {
+  id: string;
+  type: string;
+  nationality: string;
+  category: string;
+  alcoholicOrNot: string;
+  name: string;
+  image: string;
 };

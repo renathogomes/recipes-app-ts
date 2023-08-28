@@ -10,19 +10,16 @@ export const FoodService = (food: RecipeScope) => {
       const response = await fetch(`${BASE_URL}/${type === 'i'
         ? 'filter' : 'search'}.php?${type}=${term}`);
       const data = await response.json();
-      console.log('search', data);
       return data[food] ?? [];
     },
     getById: async (id?: string): Promise<Recipe> => {
       const response = await fetch(`${BASE_URL}/lookup.php?i=${id}`);
       const data = await response.json();
-      console.log('getById', data);
       return data[food];
     },
     getCategories: async (): Promise<Category[]> => {
       const response = await fetch(`${BASE_URL}/list.php?c=list`);
       const data = await response.json();
-      console.log('getCategories', data);
       return data[food] ?? [];
     },
     getByCategory: async (category: string): Promise<Recipe[]> => {
