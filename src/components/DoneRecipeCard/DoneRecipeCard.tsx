@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useDoneRecipes from '../../hooks/useDoneRecipes';
 import shareIcon from '../../images/shareIcon.svg';
 import favoriteIcon from '../../images/blackHeartIcon.svg';
 import { GlobalContext } from '../../contexts/global.context';
@@ -9,6 +10,9 @@ export default function DoneRecipeCard() {
 
   const state = useContext(GlobalContext);
   const { doneRecipes } = state.state;
+
+  const doneRecipesButtons = useDoneRecipes();
+  const { handleShare, isShared } = doneRecipesButtons;
 
   useEffect(() => {
     const getRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
@@ -59,12 +63,15 @@ export default function DoneRecipeCard() {
                 alt={ name }
               />
             </button>
-            <button>
+            <button
+              onClick={ () => handleShare(type, id) }
+            >
               <img
                 data-testid={ `${index}-horizontal-share-btn` }
                 src={ shareIcon }
                 alt="share icon"
               />
+              { isShared === id && <span>Link copied!</span> }
             </button>
             <button>
               <img
