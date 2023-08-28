@@ -8,6 +8,11 @@ function useDoneRecipes() {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
+    const getRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+    state.update({ ...state, doneRecipes: getRecipes });
+  }, []);
+
+  useEffect(() => {
     const newDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
     if (filter === 'all') {
       state.update({ ...state, doneRecipes: newDoneRecipes });

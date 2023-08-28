@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import emptyHeart from '../../images/whiteHeartIcon.svg';

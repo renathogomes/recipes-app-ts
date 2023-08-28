@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useDoneRecipes from '../../hooks/useDoneRecipes';
 import shareIcon from '../../images/shareIcon.svg';
@@ -14,11 +14,6 @@ export default function DoneRecipeCard() {
   const doneRecipesButtons = useDoneRecipes();
   const { handleShare, isShared } = doneRecipesButtons;
 
-  useEffect(() => {
-    const getRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
-    state.update({ ...state, doneRecipes: getRecipes });
-  }, []);
-
   const handleNavigate = (recipeId: string, type: string) => {
     navigate(`/${type}s/${recipeId}`);
   };
@@ -26,7 +21,15 @@ export default function DoneRecipeCard() {
   return (
     <div>
       { doneRecipes?.map((recipe, index) => {
-        const { category, image, name, type, nationality, alcoholicOrNot, id, doneDate } = recipe;
+        const {
+          category,
+          image,
+          name,
+          type,
+          nationality,
+          alcoholicOrNot,
+          id,
+          doneDate } = recipe;
         return (
           <div key={ index }>
             <button
@@ -46,10 +49,10 @@ export default function DoneRecipeCard() {
             >
               { doneDate }
             </h5>
-            {recipe.tags.map((tag, tagIndex) => (
+            {recipe.tags.map((tag) => (
               <h6
                 key={ tag }
-                data-testid={ `${index}-${tag}-horizontal-tag`}
+                data-testid={ `${index}-${tag}-horizontal-tag` }
               >
                 {tag}
               </h6>

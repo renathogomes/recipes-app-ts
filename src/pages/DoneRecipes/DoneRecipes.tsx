@@ -1,17 +1,8 @@
-import { useState, useEffect } from 'react';
 import useDoneRecipes from '../../hooks/useDoneRecipes';
 import Header from '../../components/Header';
-import { DoneRecipe } from '../RecipeInProgress/RecipeInProgress';
 import DoneRecipeCard from '../../components/DoneRecipeCard/DoneRecipeCard';
 
 export default function DoneRecipes() {
-  const [doneRecipes, setDoneRecipes] = useState<DoneRecipe[]>([]);
-  useEffect(() => {
-    const doneRecipesJSON = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
-    setDoneRecipes(doneRecipesJSON);
-    console.log(doneRecipes);
-  }, []);
-
   const doneRecipeButtons = useDoneRecipes();
   const { setFilter } = doneRecipeButtons;
 
