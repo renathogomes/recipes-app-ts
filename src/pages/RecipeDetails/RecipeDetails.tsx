@@ -184,14 +184,14 @@ function RecipeDetails({ scope }: RecipesProps) {
         )) }
       </ul>
       <h2 className={ style.heading }>Instructions</h2>
-        <p
-          data-testid="instructions"
-          className={ style.instructions }
-        >
-          { recipe?.strInstructions }
-        </p>
-        <h2 className={ style.heading }>Video</h2>
-        { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="340" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
+      <p
+        data-testid="instructions"
+        className={ style.instructions }
+      >
+        { recipe?.strInstructions }
+      </p>
+      <h2 className={ style.heading }>Video</h2>
+      { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="340" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
       <Recommended
         type={ scope }
         term={ recipe?.strMeal || recipe?.strDrink as string }
