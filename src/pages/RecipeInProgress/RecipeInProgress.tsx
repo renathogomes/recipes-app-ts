@@ -156,7 +156,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         name: recipe?.strMeal || recipe?.strDrink,
         image: recipe?.strMealThumb || recipe?.strDrinkThumb,
         doneDate: new Date().toISOString(),
-        tags: recipe?.strTags === null ? [] : recipe?.strTags.split(','),
+        tags: recipe?.strTags === undefined ? [] : recipe?.strTags.split(','),
       } as DoneRecipe;
       doneRecipes.push(newDoneRecipe);
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));

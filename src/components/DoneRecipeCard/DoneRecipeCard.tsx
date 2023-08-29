@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useDoneRecipes from '../../hooks/useDoneRecipes';
 import shareIcon from '../../images/shareIcon.svg';
-import favoriteIcon from '../../images/blackHeartIcon.svg';
 import { GlobalContext } from '../../contexts/global.context';
 
 export default function DoneRecipeCard() {
@@ -75,13 +74,6 @@ export default function DoneRecipeCard() {
                 alt="share icon"
               />
               { isShared === id && <span>Link copied!</span> }
-            </button>
-            <button>
-              <img
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ favoriteIcon }
-                alt="favorite icon"
-              />
             </button>
           </div>
 

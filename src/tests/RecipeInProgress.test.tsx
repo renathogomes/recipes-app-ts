@@ -77,6 +77,12 @@ const MOCK_DRINK = {
   ],
 };
 
+const MOCK_CHECKBOX = {
+  52977: {
+    checkboxes: [false],
+  },
+};
+
 const MEAL_ROUTE = '/meals/52977/in-progress';
 const FAVORITE_BTN = 'favorite-btn';
 
@@ -183,7 +189,9 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
     expect(global.fetch).toBeCalledTimes(3);
     expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
     const ingredientCheckbox = screen.getByRole('checkbox');
-    fireEvent.click(ingredientCheckbox);
+    screen.debug();
+    await userEvent.click(ingredientCheckbox);
+    expect(ingredientCheckbox).toBeChecked();
     const finishBtn = screen.getByTestId('finish-recipe-btn');
     await userEvent.click(finishBtn);
     expect(window.location.pathname).toBe('/done-recipes');
