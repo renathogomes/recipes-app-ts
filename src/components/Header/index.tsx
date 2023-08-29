@@ -27,9 +27,9 @@ export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
             data-testid="page-title"
             className={ style.heading }
           >
-            <span className={ style.subtitleSpan }>app</span>
+            <span className={ style.titleSpan }>Recipes</span>
             {' '}
-            <span className={ style.titleSpan }>receitas</span>
+            <span className={ style.subtitleSpan }>app</span>
           </h1>
         </button>
         <div className={ style.icons }>

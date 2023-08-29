@@ -5,16 +5,11 @@ import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import emptyHeart from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
+import style from './RecipeInProgress.module.css';
 
-export type RecipesProps = {
-  scope: RecipeScope;
-};
+export type RecipesProps = { scope: RecipeScope };
 
-type Ingredients = {
-  measure: string;
-  ingredient: string;
-  checked: boolean;
-};
+type Ingredients = { measure: string, ingredient: string, checked: boolean };
 
 type Favorite = {
   id: string;
@@ -154,27 +149,51 @@ function RecipeInProgress({ scope }: RecipesProps) {
 
   return (
     <>
-      <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>
+      <img
+        style={ { width: '100%' } }
+        data-testid="recipe-photo"
+        src={ recipe?.strDrinkThumb || recipe?.strMealThumb }
+        alt="recipe thumbnail"
+        className={ style.recipeImg }
+      />
+      <button
+        onClick={ () => handleShare() }
+        data-testid="share-btn"
+        className={ style.btnShare }
+      >
+        <img src="src/images/Share.svg" alt="" className={ style.iconShare } />
+      </button>
       { isShared && <p>Link copied!</p> }
       { isFavorite
         ? (
-          <button onClick={ () => handleFavorite() }>
+          <button onClick={ () => handleFavorite() } className={ style.btnFav }>
             <img
               data-testid="favorite-btn"
               src={ heart }
               alt="favorite"
+              className={ style.iconFav }
             />
           </button>)
         : (
-          <button onClick={ () => handleFavorite() }>
+          <button
+            onClick={ () => handleFavorite() }
+            className={ style.btnFav }
+          >
             <img
               data-testid="favorite-btn"
               src={ emptyHeart }
               alt="favorite"
+              className={ style.iconFav }
             />
           </button>) }
-      <h1 data-testid="recipe-title">{ recipe?.strMeal || recipe?.strDrink }</h1>
-      <h2 data-testid="recipe-category">{ recipe?.strCategory }</h2>
+      <div className={ style.titlesContainer }>
+        <h1 data-testid="recipe-title" className={ style.recipeTitle }>
+          { recipe?.strMeal || recipe?.strDrink }
+        </h1>
+        <h2 data-testid="recipe-category" className={ style.recipeCategory }>
+          { recipe?.strCategory }
+        </h2>
+      </div>
       {
         recipe?.strAlcoholic
         && (
@@ -182,18 +201,15 @@ function RecipeInProgress({ scope }: RecipesProps) {
             { recipe?.strAlcoholic }
           </h5>)
       }
-      <img
-        style={ { width: '200px' } }
-        data-testid="recipe-photo"
-        src={ recipe?.strDrinkThumb || recipe?.strMealThumb }
-        alt="recipe thumbnail"
-      />
-      <ul>
+      <h2 className={ style.heading }>Ingredients</h2>
+      <ul className={ style.ingredientContainer }>
         { ingredients.map((el, index) => (
           <label
             htmlFor="ingredient"
             data-testid={ `${index}-ingredient-step` }
             key={ index }
+            className={ style.label }
+            id="ingredient"
             style={
               el.checked
                 ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
@@ -205,21 +221,27 @@ function RecipeInProgress({ scope }: RecipesProps) {
               id="ingredient"
               onChange={ () => handleCheckboxChange(index) }
               checked={ el.checked }
+              className={ style.input }
             />
             { `${el.measure} ${el.ingredient}` }
           </label>
         )) }
       </ul>
-      <p data-testid="instructions">{ recipe?.strInstructions }</p>
-      { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
-      <button
-        data-testid="finish-recipe-btn"
-        disabled={ !allCheckboxesChecked }
-        onClick={ handleFinishRecipe }
-        style={ { position: 'fixed', bottom: '0', right: '0' } }
-      >
-        Finish Recipe
-      </button>
+      <h2 className={ style.heading }>Instructions</h2>
+      <p data-testid="instructions" className={ style.instructions }>
+        { recipe?.strInstructions }
+      </p>
+      <div className={ style.centralize }>
+        { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
+        <button
+          data-testid="finish-recipe-btn"
+          disabled={ !allCheckboxesChecked }
+          onClick={ handleFinishRecipe }
+          className={ style.btnFinish }
+        >
+          Finish Recipe
+        </button>
+      </div>
     </>
   );
 }

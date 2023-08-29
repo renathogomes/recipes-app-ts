@@ -5,6 +5,7 @@ import favoriteIcon from '../../images/blackHeartIcon.svg';
 import useFavorites from '../../hooks/useFavorites';
 import { GlobalContext } from '../../contexts/global.context';
 import style from './FavoriteCard.module.css';
+import { Footer } from '../Footer/Footer';
 
 export default function FavoriteCard() {
   const navigate = useNavigate();
@@ -29,21 +30,6 @@ export default function FavoriteCard() {
               className={ style.navigateBtn }
               onClick={ () => handleNavigate(id, type) }
             >
-              <h3
-                data-testid={ `${index}-horizontal-name` }
-              >
-                { name }
-              </h3>
-            </button>
-            <h4
-              data-testid={ `${index}-horizontal-top-text` }
-            >
-              { type === 'meal' ? `${nationality} - ${category}` : alcoholicOrNot }
-            </h4>
-            <button
-              className={ style.navigateBtn }
-              onClick={ () => handleNavigate(id, type) }
-            >
               <img
                 className={ style.recipeImg }
                 data-testid={ `${index}-horizontal-image` }
@@ -51,25 +37,46 @@ export default function FavoriteCard() {
                 alt={ name }
               />
             </button>
-            <button
-              onClick={ () => handleShare(type, id) }
-            >
-              <img
-                data-testid={ `${index}-horizontal-share-btn` }
-                src={ shareIcon }
-                alt="share icon"
-              />
-              { isShared === id && <span>Link copied!</span> }
-            </button>
-            <button
-              onClick={ () => handleUnfavorite(id) }
-            >
-              <img
-                data-testid={ `${index}-horizontal-favorite-btn` }
-                src={ favoriteIcon }
-                alt="favorite icon"
-              />
-            </button>
+            <div className={ style.subContainer }>
+              <button
+                className={ style.navigateBtn }
+                onClick={ () => handleNavigate(id, type) }
+              >
+                <h3
+                  data-testid={ `${index}-horizontal-name` }
+                  className={ style.name }
+                >
+                  { name }
+                </h3>
+              </button>
+              <h4
+                data-testid={ `${index}-horizontal-top-text` }
+                className={ style.category }
+              >
+                { type === 'meal' ? `${nationality} - ${category}` : alcoholicOrNot }
+              </h4>
+              <button
+                onClick={ () => handleShare(type, id) }
+                className={ style.btnShare }
+              >
+                <img
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  src="src/images/Share.svg"
+                  alt="share icon"
+                />
+                { isShared === id && <span>Link copied!</span> }
+              </button>
+              <button
+                onClick={ () => handleUnfavorite(id) }
+                className={ style.btnFav }
+              >
+                <img
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                  src={ favoriteIcon }
+                  alt="favorite icon"
+                />
+              </button>
+            </div>
           </div>
         );
       }) }

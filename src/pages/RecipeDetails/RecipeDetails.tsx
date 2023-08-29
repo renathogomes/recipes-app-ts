@@ -4,6 +4,7 @@ import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import heart from '../../images/blackHeartIcon.svg';
+import emptyHeart from '../../images/emptyHeart.svg';
 import style from './RecipeDetails.module.css';
 import share from '../../images/Share.svg';
 
@@ -134,7 +135,7 @@ function RecipeDetails({ scope }: RecipesProps) {
           >
             <img
               data-testid="favorite-btn"
-              src={ heart }
+              src={ emptyHeart }
               alt=""
               className={ style.iconFav }
             />
@@ -162,7 +163,7 @@ function RecipeDetails({ scope }: RecipesProps) {
       {
         recipe?.strAlcoholic
         && (
-          <h5 data-testid="recipe-category">
+          <h5 data-testid="recipe-category" className={ style.spanAlcohol }>
             { recipe?.strAlcoholic }
           </h5>)
       }
