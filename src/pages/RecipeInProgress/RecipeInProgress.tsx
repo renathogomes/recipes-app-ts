@@ -10,20 +10,12 @@ import share from '../../images/Share.svg';
 export type RecipesProps = { scope: RecipeScope };
 type Ingredients = { measure: string, ingredient: string, checked: boolean };
 
-type Favorite = {
-  id: string;
-  type: string;
-  nationality: string;
-  category: string;
+type Favorite = { id: string; type: string; nationality: string; category: string;
   alcoholicOrNot: string;
   name: string;
   image: string;
 };
-export type DoneRecipe = {
-  id: string,
-  type: string,
-  nationality: string,
-  category: string
+export type DoneRecipe = { id: string, type: string, nationality: string, category: string
   alcoholicOrNot: string,
   name: string,
   image: string,
