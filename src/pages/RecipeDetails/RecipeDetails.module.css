@@ -88,3 +88,13 @@ iframe {
   margin: 0 5vw;
   width: 90%;
 }
+
+.spanShare {
+  color: white;
+  font-size: 15px;
+  font-weight: 900;
+  padding-top: 45px;
+  position: absolute;
+  right: 3vw;
+  z-index: 10;
+}
