@@ -26,6 +26,8 @@ export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
           <h1
             className={ style.heading }
           >
+            <span className={ style.titleSpan }>Recipes</span>
+            {' '}
             <span className={ style.subtitleSpan }>app</span>
             { ' ' }
             <span className={ style.titleSpan }>receitas</span>

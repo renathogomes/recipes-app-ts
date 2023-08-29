@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import heart from '../../images/blackHeartIcon.svg';
+import emptyHeart from '../../images/emptyHeart.svg';
 import emptyHeart from '../../images/whiteHeartIcon.svg';
 import { Recommended } from '../../components/Recommended/Recommended';
 import style from './RecipeDetails.module.css';
@@ -169,7 +170,7 @@ function RecipeDetails({ scope }: RecipesProps) {
       {
         recipe?.strAlcoholic
         && (
-          <h5 data-testid="recipe-category">
+          <h5 data-testid="recipe-category" className={ style.spanAlcohol }>
             { recipe?.strAlcoholic }
           </h5>)
       }
