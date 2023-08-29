@@ -1,8 +1,9 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import mockSearchMeal from './mocks/mockSearchMeal';
+import mockSearchDrink from './mocks/mockSearchDrink';
 import App from '../App';
 
 const CORBA_IMG = 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg';
@@ -16,6 +17,20 @@ const EXPECTED_FAV = [
     alcoholicOrNot: '',
     name: 'Corba',
     image: CORBA_IMG,
+  },
+];
+
+const EXPECTED_DONE = [
+  {
+    id: '52977',
+    type: 'meal',
+    nationality: '',
+    category: 'Dessert',
+    alcoholicOrNot: '',
+    name: 'Corba',
+    image: CORBA_IMG,
+    doneDate: '2023-08-28T20:37:12.755Z',
+    tags: 'Soup',
   },
 ];
 
@@ -41,6 +56,8 @@ const MOCK_FAV = [
     alcoholicOrNot: '',
     name: 'Burek',
     image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+    doneDate: '2023-08-28T20:37:12.755Z',
+    tags: 'Streetfood, Onthego',
   },
 ];
 
@@ -88,7 +105,7 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
     await waitFor(() => expect(screen.getByTestId('recipe-title')).toHaveTextContent('GG'));
   });
 
-  test('Verifica se ao clilcar em compartilhar o link da pagina é copiado para o clipboard', async () => {
+  test('Verifica se ao clicar em compartilhar o link da pagina é copiado para o clipboard', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
       json: async () => mockSearchMeal,
     });
@@ -132,5 +149,43 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(null);
     await userEvent.click(screen.getByTestId(FAVORITE_BTN));
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(JSON.stringify([EXPECTED_FAV_DRINK[0]]));
+  });
+
+  test('Verifica funcionalidade da checkbox', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    });
+    renderWithRouter(<App />, { route: '/meals/52977' });
+    expect(global.fetch).toBeCalledTimes(2);
+    await userEvent.click(screen.getByTestId('start-recipe-btn'));
+    expect(global.fetch).toBeCalledTimes(3);
+    expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
+    const ingredientCheckbox = screen.getByRole('checkbox');
+    fireEvent.click(ingredientCheckbox);
+    expect(ingredientCheckbox).toBeChecked();
+  });
+
+  test('Verifica se é redirecionado ao clicar em Finish Recipe', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    });
+    renderWithRouter(<App />, { route: '/meals/52977' });
+    expect(global.fetch).toBeCalledTimes(2);
+    await userEvent.click(screen.getByTestId('start-recipe-btn'));
+    expect(global.fetch).toBeCalledTimes(3);
+    expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
+    const ingredientCheckbox = screen.getByRole('checkbox');
+    fireEvent.click(ingredientCheckbox);
+    const finishBtn = screen.getByTestId('finish-recipe-btn');
+    await userEvent.click(finishBtn);
+    expect(window.location.pathname).toBe('/done-recipes');
   });
 });
