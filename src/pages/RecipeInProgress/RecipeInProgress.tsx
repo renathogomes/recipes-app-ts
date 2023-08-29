@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
-import emptyHeart from '../../images/whiteHeartIcon.svg';
+import emptyHeart from '../../images/emptyHeart.svg';
 import heart from '../../images/blackHeartIcon.svg';
 import style from './RecipeInProgress.module.css';
 import share from '../../images/Share.svg';
@@ -191,7 +191,10 @@ function RecipeInProgress({ scope }: RecipesProps) {
         </h2>
       </div>
       { recipe?.strAlcoholic && (
-        <h5 data-testid="recipe-category">
+        <h5
+          style={ { textAlign: 'center' } }
+          data-testid="recipe-category"
+        >
           { recipe?.strAlcoholic }
         </h5>) }
       <h2 className={ style.heading }>Ingredients</h2>
@@ -223,7 +226,8 @@ function RecipeInProgress({ scope }: RecipesProps) {
       <p data-testid="instructions" className={ style.instructions }>
         { recipe?.strInstructions }
       </p>
-      <h2 style={ { paddingBottom: '0' } } className={ style.heading }>Vídeo</h2>
+      { scope !== 'drinks'
+        && <h2 style={ { paddingBottom: '0' } } className={ style.heading }>Vídeo</h2> }
       <div className={ style.centralize }>
         { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
         <button

@@ -10,18 +10,20 @@
 
 .btnFav {
   background-color: transparent;
-  border: none;
 }
 
 .iconFav {
   position: absolute;
   right: 5vw;
+  width: 23px;
   z-index: 1;
 }
 
 .iconShare {
+  padding-top: 1px;
   position: absolute;
   right: 15vw;
+  stroke-width: 10px;
   z-index: 1;
 }
 
@@ -73,11 +75,7 @@
 }
 
 .spanAlcohol {
-<<<<<<< HEAD
   text-align: center;
-=======
-  padding-left: 15px;
->>>>>>> 1d0539e69543f4a1183fe4b5a63a226650839c2e
 }
 
 .instructions {
@@ -102,7 +100,6 @@ iframe {
   right: 3vw;
   z-index: 10;
 }
-<<<<<<< HEAD
 
 .btnStart {
   background-color: #fcc436;
@@ -132,5 +129,3 @@ iframe {
   flex-direction: column;
   justify-content: center;
 }
-=======
->>>>>>> 1d0539e69543f4a1183fe4b5a63a226650839c2e

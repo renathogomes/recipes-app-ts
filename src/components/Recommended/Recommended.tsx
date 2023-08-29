@@ -18,8 +18,6 @@ export function Recommended({ type }: DetailsRecipe) {
     getRecommended();
   }, []);
 
-  console.log(data);
-
   return (
     <div>
       <div

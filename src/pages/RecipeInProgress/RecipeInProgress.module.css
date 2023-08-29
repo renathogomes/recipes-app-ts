@@ -28,12 +28,6 @@
   margin-top: 30px;
 }
 
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
 .btnShare {
   background-color: transparent;
   border: none;
@@ -51,6 +45,7 @@
 }
 
 .iconShare {
+  padding-top: 2px;
   position: absolute;
   right: 15vw;
   z-index: 1;
