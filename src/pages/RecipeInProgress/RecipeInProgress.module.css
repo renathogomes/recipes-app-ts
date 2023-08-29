@@ -2,12 +2,14 @@
   background-color: #fcc436;
   border: none;
   border-radius: 5px;
+  bottom: 10px;
   color: white;
   cursor: pointer;
   font-weight: 700;
   height: 40px;
   letter-spacing: 1px;
   margin-top: 20px;
+  position: fixed;
   text-align: center;
   text-transform: uppercase;
   width: 90%;

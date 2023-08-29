@@ -4,7 +4,6 @@ import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import heart from '../../images/blackHeartIcon.svg';
 import emptyHeart from '../../images/emptyHeart.svg';
-import emptyHeart from '../../images/whiteHeartIcon.svg';
 import { Recommended } from '../../components/Recommended/Recommended';
 import style from './RecipeDetails.module.css';
 import share from '../../images/Share.svg';
@@ -194,16 +193,19 @@ function RecipeDetails({ scope }: RecipesProps) {
       </p>
       { scope !== 'drinks' && <h2 className={ style.heading }>Video</h2> }
       { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="340" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
+      <h2 className={ style.heading }>Recommended</h2>
       <Recommended
         type={ scope }
       />
-      <button
-        className={ style.startRecipe }
-        data-testid="start-recipe-btn"
-        onClick={ handleClick }
-      >
-        Start Recipe
-      </button>
+      <div className={ style.bottomContainer }>
+        <button
+          className={ style.btnStart }
+          data-testid="start-recipe-btn"
+          onClick={ handleClick }
+        >
+          Start Recipe
+        </button>
+      </div>
     </>
   );
 }

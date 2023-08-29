@@ -29,8 +29,6 @@ export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
             <span className={ style.titleSpan }>Recipes</span>
             {' '}
             <span className={ style.subtitleSpan }>app</span>
-            { ' ' }
-            <span className={ style.titleSpan }>receitas</span>
           </h1>
         </button>
         <div className={ style.icons }>
