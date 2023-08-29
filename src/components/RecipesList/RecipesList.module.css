@@ -123,9 +123,9 @@
   .cardContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 0 auto;
-    margin-bottom: 30px;
-    width: 80%;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    width: 60%;
   }
 
   .btnIconsContainer {
