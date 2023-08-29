@@ -111,12 +111,12 @@ function RecipeDetails({ scope }: RecipesProps) {
     <>
       <button
         onClick={ () => handleShare() }
-        data-testid="share-btn"
         className={ style.btnShare }
       >
         <img
+          data-testid="share-btn"
           src={ share }
-          alt=""
+          alt="share img"
           className={ style.iconShare }
         />
       </button>

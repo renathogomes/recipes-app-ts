@@ -12,6 +12,19 @@ export type GlobalContextState = {
   favoriteRecipes: Favorite[];
   finishedRecipes: Recipe[];
   inProgressRecipes: Recipe[];
+  doneRecipes: DoneRecipe[];
+};
+
+export type DoneRecipe = {
+  id: string,
+  type: string,
+  nationality: string,
+  category: string
+  alcoholicOrNot: string,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string[],
 };
 export type Favorite = {
   id: string;

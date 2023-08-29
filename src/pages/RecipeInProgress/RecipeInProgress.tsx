@@ -25,6 +25,18 @@ type Favorite = {
   image: string;
 };
 
+export type DoneRecipe = {
+  id: string,
+  type: string,
+  nationality: string,
+  category: string
+  alcoholicOrNot: string,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string[],
+};
+
 function RecipeInProgress({ scope }: RecipesProps) {
   const { recipeId } = useParams<{ recipeId: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -145,7 +157,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         image: recipe?.strMealThumb || recipe?.strDrinkThumb,
         doneDate: new Date().toISOString(),
         tags: recipe?.strTags === null ? [] : recipe?.strTags.split(','),
-      };
+      } as DoneRecipe;
       doneRecipes.push(newDoneRecipe);
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     }
