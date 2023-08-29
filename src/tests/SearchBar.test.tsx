@@ -6,6 +6,7 @@ import { renderWithRouter } from '../helpers/renderWithRouter';
 import App from '../App';
 import mockSearchMeal from './mocks/mockSearchMeal';
 import { mockRecipeCategories } from './mocks/mockRecipesList';
+import mockSearchDrink from './mocks/mockSearchDrink';
 
 afterEach(() => {
   vi.clearAllMocks();
@@ -103,6 +104,9 @@ describe('Testando o componente SearchBar', async () => {
         json: async () => mockSearchMeal,
       })
       .mockResolvedValueOnce({
+        json: async () => mockSearchDrink,
+      })
+      .mockResolvedValueOnce({
         json: async () => ({ meals: [mockSearchMeal.meals[9]] }),
       });
     renderWithRouter(<App />, { route: '/meals' });
@@ -125,6 +129,9 @@ describe('Testando o componente SearchBar', async () => {
       })
       .mockResolvedValueOnce({
         json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      })
+      .mockResolvedValueOnce({
+        json: async () => mockSearchDrink,
       })
       .mockResolvedValueOnce({
         json: async () => ({ meals: [mockSearchMeal.meals[0]] }),

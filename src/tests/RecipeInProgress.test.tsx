@@ -3,7 +3,6 @@ import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import mockSearchMeal from './mocks/mockSearchMeal';
-import { mockRecipeCategories } from './mocks/mockRecipesList';
 import App from '../App';
 
 const CORBA_IMG = 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg';

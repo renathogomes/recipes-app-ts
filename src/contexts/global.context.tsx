@@ -7,6 +7,7 @@ export const CONTEXT_INITIAL_STATE: GlobalContextType = {
     favoriteRecipes: [],
     finishedRecipes: [],
     inProgressRecipes: [],
+    doneRecipes: [],
   },
   update: () => {},
 };

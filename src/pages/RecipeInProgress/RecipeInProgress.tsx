@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { RecipeContext } from '../../contexts/recipes.context';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import emptyHeart from '../../images/whiteHeartIcon.svg';
@@ -19,6 +18,18 @@ type Favorite = {
   alcoholicOrNot: string;
   name: string;
   image: string;
+};
+
+export type DoneRecipe = {
+  id: string,
+  type: string,
+  nationality: string,
+  category: string
+  alcoholicOrNot: string,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string[],
 };
 
 function RecipeInProgress({ scope }: RecipesProps) {
@@ -141,7 +152,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         image: recipe?.strMealThumb || recipe?.strDrinkThumb,
         doneDate: new Date().toISOString(),
         tags: recipe?.strTags === null ? [] : recipe?.strTags.split(','),
-      };
+      } as DoneRecipe;
       doneRecipes.push(newDoneRecipe);
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     }

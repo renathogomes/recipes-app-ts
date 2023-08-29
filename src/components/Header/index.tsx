@@ -24,7 +24,6 @@ export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
         >
           <img src={ trayImg } alt="meal icon" />
           <h1
-            data-testid="page-title"
             className={ style.heading }
           >
             <span className={ style.titleSpan }>Recipes</span>
@@ -40,7 +39,12 @@ export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
       { searchOn && <SearchInput /> }
       <div className={ style.bottomHeaderContainer }>
         <img src={ `src/icons/${pageTitle}.svg` } alt="" />
-        <h2 className={ style.bottomHeading }>{pageTitle}</h2>
+        <h2
+          data-testid="page-title"
+          className={ style.bottomHeading }
+        >
+          { pageTitle }
+        </h2>
       </div>
     </header>
   );

@@ -10,6 +10,7 @@ import { Footer } from './components/Footer/Footer';
 import RecipeInProgress from './pages/RecipeInProgress/RecipeInProgress';
 import Profile from './pages/Profile/Profile';
 import { CONTEXT_INITIAL_STATE, GlobalContextProvider } from './contexts/global.context';
+import DoneRecipes from './pages/DoneRecipes/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
@@ -49,10 +50,7 @@ function App() {
         <Route
           path="/done-recipes"
           element={
-            <Header
-              pageTitle="Done Recipes"
-              searchIcon={ false }
-            />
+            <DoneRecipes />
           }
         />
         <Route
