@@ -19,7 +19,6 @@ type Favorite = {
   name: string;
   image: string;
 };
-
 export type DoneRecipe = {
   id: string,
   type: string,
