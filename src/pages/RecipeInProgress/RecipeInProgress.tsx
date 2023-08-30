@@ -4,6 +4,7 @@ import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import emptyHeart from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
+import { Favorite, DoneRecipe } from '../../types/types';
 
 export type RecipesProps = {
   scope: RecipeScope;
@@ -13,28 +14,6 @@ type Ingredients = {
   measure: string;
   ingredient: string;
   checked: boolean;
-};
-
-type Favorite = {
-  id: string;
-  type: string;
-  nationality: string;
-  category: string;
-  alcoholicOrNot: string;
-  name: string;
-  image: string;
-};
-
-export type DoneRecipe = {
-  id: string,
-  type: string,
-  nationality: string,
-  category: string
-  alcoholicOrNot: string,
-  name: string,
-  image: string,
-  doneDate: string,
-  tags: string[],
 };
 
 function RecipeInProgress({ scope }: RecipesProps) {

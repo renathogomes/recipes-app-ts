@@ -48,12 +48,6 @@ describe('Testes referentes ao componente DoneRecipes', () => {
     vi.clearAllMocks();
   });
 
-  // beforeEach(() => {
-  //   global.fetch = vi.fn().mockResolvedValue({
-  //     json: async () => (MOCK_DONE_RECIPES),
-  //   });
-  // });
-
   test('Verifica se ao abrir a pagina sem nenhuma receita concluída ele não renderiza nenhuma card', async () => {
     renderWithRouter(<App />, { route: DONE_RECIPES });
     expect(screen.queryByTestId(FIRST_CARD_NAME_TEST_ID)).not.toBeInTheDocument();
@@ -64,7 +58,7 @@ describe('Testes referentes ao componente DoneRecipes', () => {
     window.localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DONE_RECIPES));
     renderWithRouter(<App />, { route: DONE_RECIPES });
     expect(screen.getAllByTestId(/horizontal-name/i)).toHaveLength(3);
-    expect(screen.getByTestId('0-horizontal-name')).toHaveTextContent('Corba');
+    expect(screen.getByTestId(FIRST_CARD_NAME_TEST_ID)).toHaveTextContent('Corba');
   });
 
   test('Verifica se renderiza as informações corretas para comida e drink', async () => {
@@ -72,7 +66,7 @@ describe('Testes referentes ao componente DoneRecipes', () => {
     window.localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DONE_RECIPES));
     renderWithRouter(<App />, { route: DONE_RECIPES });
     expect(screen.getAllByTestId(/horizontal-name/i)).toHaveLength(3);
-    expect(screen.getByTestId('0-horizontal-name')).toHaveTextContent('Corba');
+    expect(screen.getByTestId(FIRST_CARD_NAME_TEST_ID)).toHaveTextContent('Corba');
     expect(screen.getByTestId('1-horizontal-name')).toHaveTextContent('Dal fry');
     expect(screen.getByTestId('2-horizontal-top-text')).toHaveTextContent('Optional alcohol');
     expect(screen.getByTestId('1-horizontal-top-text')).toHaveTextContent('Indian - Vegetarian');
