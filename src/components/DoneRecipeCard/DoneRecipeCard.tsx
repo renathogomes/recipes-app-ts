@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import useDoneRecipes from '../../hooks/useDoneRecipes';
 import shareIcon from '../../images/shareIcon.svg';
 import { GlobalContext } from '../../contexts/global.context';
@@ -16,14 +17,6 @@ export default function DoneRecipeCard() {
 
   const handleNavigate = (recipeId: string, type: string) => {
     navigate(`/${type}s/${recipeId}`);
-  };
-
-  const formattedDate = (date: string) => {
-    console.log(date);
-    const day = date.slice(8, 10);
-    const month = date.slice(5, 7);
-    const year = date.slice(0, 4);
-    return `${day}/${month}/${year}`;
   };
 
   return (
@@ -82,7 +75,7 @@ export default function DoneRecipeCard() {
                 data-testid={ `${index}-horizontal-done-date` }
                 className={ style.date }
               >
-                { `Done in: ${formattedDate(doneDate)}` }
+                { `Done in: ${doneDate}` }
               </h5>
               <div className="tagContainer">
                 {recipe.tags.map((tagName) => (
