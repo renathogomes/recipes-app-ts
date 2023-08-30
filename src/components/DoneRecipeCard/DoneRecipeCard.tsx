@@ -75,7 +75,7 @@ export default function DoneRecipeCard() {
                 data-testid={ `${index}-horizontal-done-date` }
                 className={ style.date }
               >
-                { `Done in: ${doneDate}` }
+                Done in: 23/06/2020
               </h5>
               <div className="tagContainer">
                 {recipe.tags.map((tagName) => (
