@@ -44,7 +44,7 @@ function Profile() {
           onClick={ () => redirect('done') }
           className={ style.btnDone }
         >
-          <img src="src/icons/Done.svg" alt="" />
+          <img src="src/icons/Done Recipes.svg" alt="" />
           <span className={ style.spanBtn }>Done Recipes</span>
         </button>
         <div className={ style.separator } />

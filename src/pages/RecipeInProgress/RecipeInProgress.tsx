@@ -2,29 +2,20 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
-import emptyHeart from '../../images/whiteHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
 import style from './RecipeInProgress.module.css';
+import shareIcon from '../../images/Share.svg';
 
 export type RecipesProps = { scope: RecipeScope };
-
 type Ingredients = { measure: string, ingredient: string, checked: boolean };
 
-type Favorite = {
-  id: string;
-  type: string;
-  nationality: string;
-  category: string;
+type Favorite = { id: string; type: string; nationality: string; category: string;
   alcoholicOrNot: string;
   name: string;
   image: string;
 };
-
-export type DoneRecipe = {
-  id: string,
-  type: string,
-  nationality: string,
-  category: string
+export type DoneRecipe = { id: string, type: string, nationality: string, category: string
   alcoholicOrNot: string,
   name: string,
   image: string,
@@ -71,10 +62,8 @@ function RecipeInProgress({ scope }: RecipesProps) {
           ingredient.checked = savedCheckboxStates[index];
         });
       }
-
       setIngredients(newIngredients);
     };
-
     getRecipe();
   }, [recipeId]);
 
@@ -161,7 +150,6 @@ function RecipeInProgress({ scope }: RecipesProps) {
   return (
     <>
       <img
-        style={ { width: '100%' } }
         data-testid="recipe-photo"
         src={ recipe?.strDrinkThumb || recipe?.strMealThumb }
         alt="recipe thumbnail"
@@ -172,7 +160,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         data-testid="share-btn"
         className={ style.btnShare }
       >
-        <img src="src/images/Share.svg" alt="" className={ style.iconShare } />
+        <img src={ shareIcon } alt="" className={ style.iconShare } />
       </button>
       { isShared && <p>Link copied!</p> }
       { isFavorite
@@ -186,13 +174,10 @@ function RecipeInProgress({ scope }: RecipesProps) {
             />
           </button>)
         : (
-          <button
-            onClick={ () => handleFavorite() }
-            className={ style.btnFav }
-          >
+          <button onClick={ () => handleFavorite() } className={ style.btnFav }>
             <img
               data-testid="favorite-btn"
-              src={ emptyHeart }
+              src={ whiteHeartIcon }
               alt="favorite"
               className={ style.iconFav }
             />
@@ -205,13 +190,13 @@ function RecipeInProgress({ scope }: RecipesProps) {
           { recipe?.strCategory }
         </h2>
       </div>
-      {
-        recipe?.strAlcoholic
-        && (
-          <h5 data-testid="recipe-category">
-            { recipe?.strAlcoholic }
-          </h5>)
-      }
+      { recipe?.strAlcoholic && (
+        <h5
+          style={ { textAlign: 'center' } }
+          data-testid="recipe-category"
+        >
+          { recipe?.strAlcoholic }
+        </h5>) }
       <h2 className={ style.heading }>Ingredients</h2>
       <ul className={ style.ingredientContainer }>
         { ingredients.map((el, index) => (
@@ -235,13 +220,14 @@ function RecipeInProgress({ scope }: RecipesProps) {
               className={ style.input }
             />
             { `${el.measure} ${el.ingredient}` }
-          </label>
-        )) }
+          </label>)) }
       </ul>
       <h2 className={ style.heading }>Instructions</h2>
       <p data-testid="instructions" className={ style.instructions }>
         { recipe?.strInstructions }
       </p>
+      { scope !== 'drinks'
+        && <h2 style={ { paddingBottom: '0' } } className={ style.heading }>Vídeo</h2> }
       <div className={ style.centralize }>
         { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
         <button
@@ -256,5 +242,4 @@ function RecipeInProgress({ scope }: RecipesProps) {
     </>
   );
 }
-
 export default RecipeInProgress;

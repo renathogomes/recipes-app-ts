@@ -43,9 +43,10 @@
 
 .cardContainer {
   display: grid;
+  gap: 5px;
   grid-template-columns: repeat(2, 1fr);
   margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   width: 90%;
 }
 

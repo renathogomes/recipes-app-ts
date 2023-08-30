@@ -11,7 +11,7 @@ export default function FavoriteRecipes() {
   return (
     <>
       <Header
-        pageTitle="Favorites"
+        pageTitle="Favorite Recipes"
         searchIcon={ false }
       />
       <div className={ style.btnIconsContainer }>

@@ -2,12 +2,14 @@
   background-color: #fcc436;
   border: none;
   border-radius: 5px;
+  bottom: 10px;
   color: white;
   cursor: pointer;
   font-weight: 700;
   height: 40px;
   letter-spacing: 1px;
   margin-top: 20px;
+  position: fixed;
   text-align: center;
   text-transform: uppercase;
   width: 90%;
@@ -24,12 +26,6 @@
   flex-direction: column;
   justify-content: center;
   margin-top: 30px;
-}
-
-
-* {
-  margin: 0;
-  padding: 0;
 }
 
 .btnShare {
@@ -49,6 +45,7 @@
 }
 
 .iconShare {
+  padding-top: 2px;
   position: absolute;
   right: 15vw;
   z-index: 1;

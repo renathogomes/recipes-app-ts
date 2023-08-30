@@ -1,9 +1,3 @@
-.startRecipe {
-  bottom: 0;
-  position: fixed;
-  right: 0;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -16,18 +10,20 @@
 
 .btnFav {
   background-color: transparent;
-  border: none;
 }
 
 .iconFav {
   position: absolute;
   right: 5vw;
+  width: 23px;
   z-index: 1;
 }
 
 .iconShare {
+  padding-top: 1px;
   position: absolute;
   right: 15vw;
+  stroke-width: 10px;
   z-index: 1;
 }
 
@@ -66,7 +62,7 @@
 
 .heading {
   font-weight: 600;
-  padding: 20px 0 0 20px;
+  padding: 10px 0 5px 20px;
 }
 
 .ingredientsList {
@@ -79,7 +75,7 @@
 }
 
 .spanAlcohol {
-  padding-left: 15px;
+  text-align: center;
 }
 
 .instructions {
@@ -103,4 +99,33 @@ iframe {
   position: absolute;
   right: 3vw;
   z-index: 10;
+}
+
+.btnStart {
+  background-color: #fcc436;
+  border: none;
+  border-radius: 5px;
+  bottom: 0;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  height: 40px;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  width: 90%;
+}
+
+.btnStart:disabled {
+  cursor: alias;
+  opacity: 0.5;
+}
+
+.bottomContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
