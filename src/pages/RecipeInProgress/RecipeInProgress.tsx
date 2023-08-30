@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
-import emptyHeart from '../../images/emptyHeart.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
 import style from './RecipeInProgress.module.css';
-import share from '../../images/Share.svg';
+import shareIcon from '../../images/Share.svg';
 
 export type RecipesProps = { scope: RecipeScope };
 type Ingredients = { measure: string, ingredient: string, checked: boolean };
@@ -160,7 +160,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         data-testid="share-btn"
         className={ style.btnShare }
       >
-        <img src={ share } alt="" className={ style.iconShare } />
+        <img src={ shareIcon } alt="" className={ style.iconShare } />
       </button>
       { isShared && <p>Link copied!</p> }
       { isFavorite
@@ -177,7 +177,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
           <button onClick={ () => handleFavorite() } className={ style.btnFav }>
             <img
               data-testid="favorite-btn"
-              src={ emptyHeart }
+              src={ whiteHeartIcon }
               alt="favorite"
               className={ style.iconFav }
             />

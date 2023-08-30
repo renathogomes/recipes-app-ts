@@ -4,6 +4,7 @@ import useDoneRecipes from '../../hooks/useDoneRecipes';
 import favoriteIcon from '../../images/shareIcon.svg';
 import { GlobalContext } from '../../contexts/global.context';
 import style from './DoneRecipeCard.module.css';
+import shareIcon from '../../images/Share.svg';
 
 export default function DoneRecipeCard() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export default function DoneRecipeCard() {
               >
                 <img
                   data-testid={ `${index}-horizontal-share-btn` }
-                  src="src/images/Share.svg"
+                  src={ shareIcon }
                   alt="share icon"
                 />
                 { isShared === id

@@ -61,7 +61,7 @@ export default function FavoriteCard() {
               >
                 <img
                   data-testid={ `${index}-horizontal-share-btn` }
-                  src="src/images/Share.svg"
+                  src={ shareIcon }
                   alt="share icon"
                 />
                 { isShared === id && <span>Link copied!</span> }

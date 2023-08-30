@@ -105,7 +105,7 @@ iframe {
   background-color: #fcc436;
   border: none;
   border-radius: 5px;
-  bottom: 10px;
+  bottom: 0;
   color: white;
   cursor: pointer;
   font-weight: 700;
