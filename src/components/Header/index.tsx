@@ -13,14 +13,12 @@ type HeaderProps = {
 
 export default function Header({ pageTitle, searchIcon = true }: HeaderProps) {
   const [searchOn, setSearchOn] = useState(false);
-  const navigate = useNavigate();
 
   return (
     <header className={ style.headerContainer }>
       <div className={ style.TopHeaderContainer }>
         <button
           className={ style.headerTitle }
-          onClick={ () => navigate('/meals') }
         >
           <img src={ trayImg } alt="meal icon" />
           <h1
