@@ -1,8 +1,10 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import App from '../App';
+import mockSearchDrink from './mocks/mockSearchDrink';
+import mockSearchMeal from './mocks/mockSearchMeal';
 
 const MOCK_DONE_RECIPES = [
   {
@@ -101,6 +103,12 @@ describe('Testes referentes ao componente DoneRecipes', () => {
   });
 
   test('Verifica se ao clicar na imagem ele redireciona para a pagina de detalhes', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchDrink,
+    })
+      .mockResolvedValueOnce({
+        json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+      });
     window.localStorage.clear();
     window.localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DONE_RECIPES));
     renderWithRouter(<App />, { route: DONE_RECIPES });
