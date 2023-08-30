@@ -4,13 +4,16 @@ import { vi } from 'vitest';
 import { renderWithRouter } from './helpers/renderWith';
 import App from '../App';
 import { mockRecipeCategories } from './mocks/mockRecipesList';
+import mockSearchMeal from './mocks/mockSearchMeal';
 
 afterEach(() => {
   vi.clearAllMocks();
 });
 
 beforeEach(() => {
-  global.fetch = vi.fn().mockResolvedValue({
+  global.fetch = vi.fn().mockResolvedValueOnce({
+    json: async () => mockSearchMeal,
+  }).mockResolvedValueOnce({
     json: async () => mockRecipeCategories,
   });
   window.alert = vi.fn();

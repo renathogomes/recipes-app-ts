@@ -41,6 +41,8 @@ const MOCK_FAV = [
     alcoholicOrNot: '',
     name: 'Burek',
     image: 'https://www.themealdb.com/images/media/meals/tkxquw1628771028.jpg',
+    doneDate: '2023-08-28T20:37:12.755Z',
+    tags: 'Streetfood, Onthego',
   },
 ];
 
@@ -88,7 +90,7 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
     await waitFor(() => expect(screen.getByTestId('recipe-title')).toHaveTextContent('GG'));
   });
 
-  test('Verifica se ao clilcar em compartilhar o link da pagina é copiado para o clipboard', async () => {
+  test('Verifica se ao clicar em compartilhar o link da pagina é copiado para o clipboard', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
       json: async () => mockSearchMeal,
     });
@@ -132,5 +134,23 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(null);
     await userEvent.click(screen.getByTestId(FAVORITE_BTN));
     expect(window.localStorage.getItem('favoriteRecipes')).toBe(JSON.stringify([EXPECTED_FAV_DRINK[0]]));
+  });
+
+  test('Verifica funcionalidade da checkbox', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      json: async () => mockSearchMeal,
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    }).mockResolvedValueOnce({
+      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
+    });
+    renderWithRouter(<App />, { route: '/meals/52977' });
+    expect(global.fetch).toBeCalledTimes(2);
+    await userEvent.click(screen.getByTestId('start-recipe-btn'));
+    expect(global.fetch).toBeCalledTimes(3);
+    expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
+    const ingredientCheckbox = screen.getByRole('checkbox');
+    await userEvent.click(ingredientCheckbox);
+    expect(ingredientCheckbox).toBeChecked();
   });
 });

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import moment from 'moment';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
@@ -139,7 +140,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         alcoholicOrNot: recipe?.strAlcoholic || '',
         name: recipe?.strMeal || recipe?.strDrink,
         image: recipe?.strMealThumb || recipe?.strDrinkThumb,
-        doneDate: new Date().toISOString(),
+        doneDate: moment().format('DD/MM/YYYY'),
         tags: recipe?.strTags === null ? [] : recipe?.strTags.split(','),
       } as DoneRecipe;
       doneRecipes.push(newDoneRecipe);
@@ -157,10 +158,14 @@ function RecipeInProgress({ scope }: RecipesProps) {
       />
       <button
         onClick={ () => handleShare() }
-        data-testid="share-btn"
         className={ style.btnShare }
       >
-        <img src={ shareIcon } alt="" className={ style.iconShare } />
+        <img
+          data-testid="share-btn"
+          src={ shareIcon }
+          alt="share img"
+          className={ style.iconShare }
+        />
       </button>
       { isShared && <p>Link copied!</p> }
       { isFavorite
