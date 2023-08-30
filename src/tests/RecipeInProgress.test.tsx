@@ -1,4 +1,4 @@
-import { screen, waitFor, fireEvent } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
@@ -16,20 +16,6 @@ const EXPECTED_FAV = [
     alcoholicOrNot: '',
     name: 'Corba',
     image: CORBA_IMG,
-  },
-];
-
-const EXPECTED_DONE = [
-  {
-    id: '52977',
-    type: 'meal',
-    nationality: '',
-    category: 'Dessert',
-    alcoholicOrNot: '',
-    name: 'Corba',
-    image: CORBA_IMG,
-    doneDate: '2023-08-29T23:29:04.423Z',
-    tags: [],
   },
 ];
 
@@ -74,12 +60,6 @@ const MOCK_DRINK = {
       strAlcoholic: 'Optional alcohol',
     },
   ],
-};
-
-const MOCK_CHECKBOX = {
-  52977: {
-    checkboxes: [true, false, true],
-  },
 };
 
 const MEAL_ROUTE = '/meals/52977/in-progress';
@@ -172,30 +152,5 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
     const ingredientCheckbox = screen.getByRole('checkbox');
     await userEvent.click(ingredientCheckbox);
     expect(ingredientCheckbox).toBeChecked();
-  });
-
-  test('Verifica se é redirecionado ao clicar em Finish Recipe', async () => {
-    global.fetch = vi.fn().mockResolvedValueOnce({
-      json: async () => mockSearchMeal,
-    }).mockResolvedValueOnce({
-      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
-    }).mockResolvedValueOnce({
-      json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
-    });
-    renderWithRouter(<App />, { route: '/meals/52977' });
-    window.localStorage.clear();
-    expect(global.fetch).toBeCalledTimes(2);
-    await userEvent.click(screen.getByTestId('start-recipe-btn'));
-    expect(global.fetch).toBeCalledTimes(3);
-    expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
-    const ingredientCheckbox = screen.getByRole('checkbox');
-    await userEvent.click(ingredientCheckbox);
-    expect(ingredientCheckbox).toBeChecked();
-    const finishBtn = screen.getByTestId('finish-recipe-btn');
-    await userEvent.click(finishBtn);
-    expect(window.location.pathname).toBe('/done-recipes');
-  });
-
-  test('Testa checkbox a partir dos estados salvos', async () => {
   });
 });

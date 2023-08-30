@@ -1,6 +1,31 @@
-* {
-  margin: 0;
-  padding: 0;
+.btnFinish {
+  background-color: #fcc436;
+  border: none;
+  border-radius: 5px;
+  bottom: 10px;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  height: 40px;
+  letter-spacing: 1px;
+  margin-top: 20px;
+  position: fixed;
+  text-align: center;
+  text-transform: uppercase;
+  width: 90%;
+}
+
+.btnFinish:disabled {
+  cursor: alias;
+  opacity: 0.5;
+}
+
+.centralize {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .btnShare {
@@ -10,20 +35,19 @@
 
 .btnFav {
   background-color: transparent;
+  border: none;
 }
 
 .iconFav {
   position: absolute;
   right: 5vw;
-  width: 23px;
   z-index: 1;
 }
 
 .iconShare {
-  padding-top: 1px;
+  padding-top: 2px;
   position: absolute;
   right: 15vw;
-  stroke-width: 10px;
   z-index: 1;
 }
 
@@ -62,7 +86,7 @@
 
 .heading {
   font-weight: 600;
-  padding: 10px 0 5px 20px;
+  padding: 10px 0 5px 25px;
 }
 
 .ingredientsList {
@@ -75,7 +99,7 @@
 }
 
 .spanAlcohol {
-  text-align: center;
+  padding-left: 15px;
 }
 
 .instructions {
@@ -91,41 +115,21 @@ iframe {
   width: 90%;
 }
 
-.spanShare {
-  color: white;
-  font-size: 15px;
-  font-weight: 900;
-  padding-top: 45px;
-  position: absolute;
-  right: 3vw;
-  z-index: 10;
-}
-
-.btnStart {
-  background-color: #fcc436;
-  border: none;
+.ingredientContainer {
+  border: 1px solid #b1b1b1;
   border-radius: 5px;
-  bottom: 0;
-  color: white;
-  cursor: pointer;
-  font-weight: 700;
-  height: 40px;
-  letter-spacing: 1px;
-  margin-top: 20px;
-  position: fixed;
-  text-align: center;
-  text-transform: uppercase;
-  width: 90%;
-}
-
-.btnStart:disabled {
-  cursor: alias;
-  opacity: 0.5;
-}
-
-.bottomContainer {
-  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  letter-spacing: 1px;
+  margin: 20px;
+  padding: 15px 10px 10px;
+
+}
+
+label {
+  line-height: 35px;
+}
+
+.input {
+  margin: 10px;
 }

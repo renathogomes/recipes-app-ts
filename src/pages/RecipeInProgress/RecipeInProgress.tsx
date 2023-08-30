@@ -2,18 +2,25 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FoodService } from '../../services/services';
 import { Recipe, RecipeScope } from '../../types/recipe';
-import emptyHeart from '../../images/whiteHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import heart from '../../images/blackHeartIcon.svg';
-import { Favorite, DoneRecipe } from '../../types/types';
+import style from './RecipeInProgress.module.css';
+import shareIcon from '../../images/Share.svg';
 
-export type RecipesProps = {
-  scope: RecipeScope;
+export type RecipesProps = { scope: RecipeScope };
+type Ingredients = { measure: string, ingredient: string, checked: boolean };
+
+type Favorite = { id: string; type: string; nationality: string; category: string;
+  alcoholicOrNot: string;
+  name: string;
+  image: string;
 };
-
-type Ingredients = {
-  measure: string;
-  ingredient: string;
-  checked: boolean;
+export type DoneRecipe = { id: string, type: string, nationality: string, category: string
+  alcoholicOrNot: string,
+  name: string,
+  image: string,
+  doneDate: string,
+  tags: string[],
 };
 
 function RecipeInProgress({ scope }: RecipesProps) {
@@ -55,10 +62,8 @@ function RecipeInProgress({ scope }: RecipesProps) {
           ingredient.checked = savedCheckboxStates[index];
         });
       }
-
       setIngredients(newIngredients);
     };
-
     getRecipe();
   }, [recipeId]);
 
@@ -135,7 +140,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         name: recipe?.strMeal || recipe?.strDrink,
         image: recipe?.strMealThumb || recipe?.strDrinkThumb,
         doneDate: new Date().toISOString(),
-        tags: recipe?.strTags === undefined ? [] : recipe?.strTags.split(','),
+        tags: recipe?.strTags === null ? [] : recipe?.strTags.split(','),
       } as DoneRecipe;
       doneRecipes.push(newDoneRecipe);
       localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
@@ -144,46 +149,67 @@ function RecipeInProgress({ scope }: RecipesProps) {
 
   return (
     <>
-      <button onClick={ () => handleShare() } data-testid="share-btn">Share</button>
+      <img
+        data-testid="recipe-photo"
+        src={ recipe?.strDrinkThumb || recipe?.strMealThumb }
+        alt="recipe thumbnail"
+        className={ style.recipeImg }
+      />
+      <button
+        onClick={ () => handleShare() }
+        className={ style.btnShare }
+      >
+        <img
+          data-testid="share-btn"
+          src={ shareIcon }
+          alt="share img"
+          className={ style.iconShare }
+        />
+      </button>
       { isShared && <p>Link copied!</p> }
       { isFavorite
         ? (
-          <button onClick={ () => handleFavorite() }>
+          <button onClick={ () => handleFavorite() } className={ style.btnFav }>
             <img
               data-testid="favorite-btn"
               src={ heart }
               alt="favorite"
+              className={ style.iconFav }
             />
           </button>)
         : (
-          <button onClick={ () => handleFavorite() }>
+          <button onClick={ () => handleFavorite() } className={ style.btnFav }>
             <img
               data-testid="favorite-btn"
-              src={ emptyHeart }
+              src={ whiteHeartIcon }
               alt="favorite"
+              className={ style.iconFav }
             />
           </button>) }
-      <h1 data-testid="recipe-title">{ recipe?.strMeal || recipe?.strDrink }</h1>
-      <h2 data-testid="recipe-category">{ recipe?.strCategory }</h2>
-      {
-        recipe?.strAlcoholic
-        && (
-          <h5 data-testid="recipe-category">
-            { recipe?.strAlcoholic }
-          </h5>)
-      }
-      <img
-        style={ { width: '200px' } }
-        data-testid="recipe-photo"
-        src={ recipe?.strDrinkThumb || recipe?.strMealThumb }
-        alt="recipe thumbnail"
-      />
-      <ul>
+      <div className={ style.titlesContainer }>
+        <h1 data-testid="recipe-title" className={ style.recipeTitle }>
+          { recipe?.strMeal || recipe?.strDrink }
+        </h1>
+        <h2 data-testid="recipe-category" className={ style.recipeCategory }>
+          { recipe?.strCategory }
+        </h2>
+      </div>
+      { recipe?.strAlcoholic && (
+        <h5
+          style={ { textAlign: 'center' } }
+          data-testid="recipe-category"
+        >
+          { recipe?.strAlcoholic }
+        </h5>) }
+      <h2 className={ style.heading }>Ingredients</h2>
+      <ul className={ style.ingredientContainer }>
         { ingredients.map((el, index) => (
           <label
             htmlFor="ingredient"
             data-testid={ `${index}-ingredient-step` }
             key={ index }
+            className={ style.label }
+            id="ingredient"
             style={
               el.checked
                 ? { textDecoration: 'line-through solid rgb(0, 0, 0)' }
@@ -195,23 +221,29 @@ function RecipeInProgress({ scope }: RecipesProps) {
               id="ingredient"
               onChange={ () => handleCheckboxChange(index) }
               checked={ el.checked }
+              className={ style.input }
             />
             { `${el.measure} ${el.ingredient}` }
-          </label>
-        )) }
+          </label>)) }
       </ul>
-      <p data-testid="instructions">{ recipe?.strInstructions }</p>
-      { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
-      <button
-        data-testid="finish-recipe-btn"
-        disabled={ !allCheckboxesChecked }
-        onClick={ handleFinishRecipe }
-        style={ { position: 'fixed', bottom: '0', right: '0' } }
-      >
-        Finish Recipe
-      </button>
+      <h2 className={ style.heading }>Instructions</h2>
+      <p data-testid="instructions" className={ style.instructions }>
+        { recipe?.strInstructions }
+      </p>
+      { scope !== 'drinks'
+        && <h2 style={ { paddingBottom: '0' } } className={ style.heading }>Vídeo</h2> }
+      <div className={ style.centralize }>
+        { recipe?.strMeal && <iframe title="recipe video" data-testid="video" width="560" height="315" src={ `https://www.youtube.com/embed/${recipe?.strYoutube.split('=')[1]}` } /> }
+        <button
+          data-testid="finish-recipe-btn"
+          disabled={ !allCheckboxesChecked }
+          onClick={ handleFinishRecipe }
+          className={ style.btnFinish }
+        >
+          Finish Recipe
+        </button>
+      </div>
     </>
   );
 }
-
 export default RecipeInProgress;

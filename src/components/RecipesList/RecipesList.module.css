@@ -43,9 +43,10 @@
 
 .cardContainer {
   display: grid;
+  gap: 5px;
   grid-template-columns: repeat(2, 1fr);
   margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   width: 90%;
 }
 
@@ -123,9 +124,9 @@
   .cardContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    margin: 0 auto;
-    margin-bottom: 30px;
-    width: 80%;
+    margin-bottom: 50px;
+    margin-top: 20px;
+    width: 60%;
   }
 
   .btnIconsContainer {

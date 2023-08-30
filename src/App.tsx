@@ -15,9 +15,10 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 
 function App() {
   const location = useLocation();
-  const hasFooter = location.pathname.startsWith('/meals')
-    || location.pathname.startsWith('/drinks')
-    || location.pathname.startsWith('/profile');
+  const hasFooter = location.pathname.endsWith('/meals')
+    || location.pathname.endsWith('/drinks')
+    || location.pathname.endsWith('/profile')
+    || location.pathname.endsWith('/done-recipes');
 
   return (
     <GlobalContextProvider value={ CONTEXT_INITIAL_STATE }>

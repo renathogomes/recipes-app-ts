@@ -48,7 +48,7 @@ describe('Testes referentes à página Login.tsx', () => {
     await userEvent.type(passwordInput, '12345678');
     expect(buttonEnter).toBeEnabled();
     await userEvent.click(buttonEnter);
-    const headingRecipes = await screen.findByRole('heading', { name: /receitas/i });
+    const headingRecipes = await screen.findByRole('heading', { name: /meals/i });
     expect(headingRecipes).toBeInTheDocument();
     expect(emailInput).not.toBeInTheDocument();
   });

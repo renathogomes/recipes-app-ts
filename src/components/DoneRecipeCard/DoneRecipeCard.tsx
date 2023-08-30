@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useDoneRecipes from '../../hooks/useDoneRecipes';
 import shareIcon from '../../images/shareIcon.svg';
 import { GlobalContext } from '../../contexts/global.context';
+import style from './DoneRecipeCard.module.css';
 
 export default function DoneRecipeCard() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function DoneRecipeCard() {
           id,
           doneDate } = recipe;
         return (
-          <div key={ index }>
+          <div key={ index } className={ style.container }>
             <button
               onClick={ () => handleNavigate(id, type) }
             >
@@ -76,7 +77,6 @@ export default function DoneRecipeCard() {
               { isShared === id && <span>Link copied!</span> }
             </button>
           </div>
-
         );
       })}
     </div>
