@@ -140,7 +140,7 @@ function RecipeInProgress({ scope }: RecipesProps) {
         alcoholicOrNot: recipe?.strAlcoholic || '',
         name: recipe?.strMeal || recipe?.strDrink,
         image: recipe?.strMealThumb || recipe?.strDrinkThumb,
-        doneDate: moment().format('DD/MM/YYYY'),
+        doneDate: new Date().toISOString(),
         tags: recipe?.strTags === null ? [] : recipe?.strTags.split(','),
       } as DoneRecipe;
       doneRecipes.push(newDoneRecipe);
