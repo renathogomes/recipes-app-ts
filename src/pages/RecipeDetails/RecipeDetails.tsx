@@ -11,12 +11,10 @@ import share from '../../images/Share.svg';
 export type RecipesProps = {
   scope: RecipeScope;
 };
-
 type Ingredients = {
   measure: string;
   ingredient: string;
 };
-
 type Favorite = {
   id: string;
   type: string;
@@ -26,7 +24,6 @@ type Favorite = {
   name: string;
   image: string;
 };
-
 function RecipeDetails({ scope }: RecipesProps) {
   const { recipeId } = useParams<{ recipeId: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
@@ -34,8 +31,12 @@ function RecipeDetails({ scope }: RecipesProps) {
   const [isShared, setIsShared] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favChanged, setFavChanged] = useState(false);
+  const [checkLocalStorage, setCheckLocalStorage] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => ((localStorage.getItem('inProgressRecipes'))
+    ? setCheckLocalStorage(true) : setCheckLocalStorage(false)), []);
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -58,17 +59,14 @@ function RecipeDetails({ scope }: RecipesProps) {
         || el.id === newRecipe?.idDrink);
       setIsFavorite(isFav);
     };
-
     getRecipe();
   }, [recipeId]);
-
   const handleShare = () => {
     const { location: { origin, pathname } } = window;
     const url = `${origin}${pathname}`;
     navigator.clipboard.writeText(url);
     setIsShared(true);
   };
-
   const handleFavorite = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
     if (favoriteRecipes.some((el: any) => el.id === recipe?.idMeal
@@ -95,18 +93,15 @@ function RecipeDetails({ scope }: RecipesProps) {
     }
     setFavChanged(!favChanged);
   };
-
   useEffect(() => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
     const isFav = favoriteRecipes.some((el: any) => el.id === recipe?.idMeal
       || el.id === recipe?.idDrink);
     setIsFavorite(isFav);
   }, [favChanged]);
-
   const handleClick = () => {
     navigate(`/${scope}/${recipeId}/in-progress`);
   };
-
   return (
     <>
       <button
@@ -203,11 +198,10 @@ function RecipeDetails({ scope }: RecipesProps) {
           data-testid="start-recipe-btn"
           onClick={ handleClick }
         >
-          Start Recipe
+          {!checkLocalStorage ? 'Start Recipe' : 'Continue Recipe'}
         </button>
       </div>
     </>
   );
 }
-
 export default RecipeDetails;
