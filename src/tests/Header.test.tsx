@@ -23,7 +23,9 @@ test('verificar se o componente Header é renderizado corretamente conforme os a
   renderWithRouter(<App />, { initialEntries: ['/meals'] });
 
   const header = screen.getByTestId('page-title');
+  const button = screen.getByRole('button', { name: /meal icon recipes app/i });
 
+  expect(button).toBeInTheDocument();
   expect(header).toHaveTextContent('Meals');
   expect(screen.getByTestId('search-top-btn')).toBeInTheDocument();
 });
@@ -44,5 +46,10 @@ test('verificar se ao clicar no botão de pesquisa, a barra de pesquisa aparece'
 
   await userEvent.click(searchButton);
 
+  const searchbarElement = screen.getByRole('textbox');
   expect(screen.getByTestId('search-input')).toBeInTheDocument();
+  expect(searchbarElement).toBeInTheDocument();
+
+  await userEvent.click(searchButton);
+  expect(searchbarElement).not.toBeInTheDocument();
 });
