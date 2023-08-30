@@ -60,6 +60,7 @@ describe('Testes referentes ao componente DoneRecipes', () => {
   });
 
   test('Verifica se ao abrir a pagina com uma receita concluída ele renderiza um card', async () => {
+    window.localStorage.clear();
     window.localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DONE_RECIPES));
     renderWithRouter(<App />, { route: DONE_RECIPES });
     expect(screen.getAllByTestId(/horizontal-name/i)).toHaveLength(3);
@@ -67,6 +68,7 @@ describe('Testes referentes ao componente DoneRecipes', () => {
   });
 
   test('Verifica se renderiza as informações corretas para comida e drink', async () => {
+    window.localStorage.clear();
     window.localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DONE_RECIPES));
     renderWithRouter(<App />, { route: DONE_RECIPES });
     expect(screen.getAllByTestId(/horizontal-name/i)).toHaveLength(3);
@@ -77,6 +79,7 @@ describe('Testes referentes ao componente DoneRecipes', () => {
   });
 
   test('Verifica se ao clicar nos botões de filto as receitas são filtradas', async () => {
+    window.localStorage.clear();
     window.localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DONE_RECIPES));
     renderWithRouter(<App />, { route: DONE_RECIPES });
     expect(screen.getAllByTestId(/horizontal-name/i)).toHaveLength(3);
@@ -94,6 +97,7 @@ describe('Testes referentes ao componente DoneRecipes', () => {
   });
 
   test('Verifica se ao clicar no botão de compartilhar ele copia o link da pagina', async () => {
+    window.localStorage.clear();
     window.localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DONE_RECIPES));
     renderWithRouter(<App />, { route: DONE_RECIPES });
     await userEvent.click(screen.getByTestId(/0-horizontal-share-btn/i));

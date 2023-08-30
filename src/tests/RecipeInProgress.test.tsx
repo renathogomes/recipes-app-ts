@@ -3,7 +3,6 @@ import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 import { renderWithRouter } from '../helpers/renderWithRouter';
 import mockSearchMeal from './mocks/mockSearchMeal';
-import mockSearchDrink from './mocks/mockSearchDrink';
 import App from '../App';
 
 const CORBA_IMG = 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg';
@@ -29,8 +28,8 @@ const EXPECTED_DONE = [
     alcoholicOrNot: '',
     name: 'Corba',
     image: CORBA_IMG,
-    doneDate: '2023-08-28T20:37:12.755Z',
-    tags: 'Soup',
+    doneDate: '2023-08-29T23:29:04.423Z',
+    tags: [],
   },
 ];
 
@@ -79,7 +78,7 @@ const MOCK_DRINK = {
 
 const MOCK_CHECKBOX = {
   52977: {
-    checkboxes: [false],
+    checkboxes: [true, false, true],
   },
 };
 
@@ -171,7 +170,7 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
     expect(global.fetch).toBeCalledTimes(3);
     expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
     const ingredientCheckbox = screen.getByRole('checkbox');
-    fireEvent.click(ingredientCheckbox);
+    await userEvent.click(ingredientCheckbox);
     expect(ingredientCheckbox).toBeChecked();
   });
 
@@ -184,16 +183,19 @@ describe('Testes referentes ao componente RecipesInProgress', () => {
       json: async () => ({ meals: [mockSearchMeal.meals[0]] }),
     });
     renderWithRouter(<App />, { route: '/meals/52977' });
+    window.localStorage.clear();
     expect(global.fetch).toBeCalledTimes(2);
     await userEvent.click(screen.getByTestId('start-recipe-btn'));
     expect(global.fetch).toBeCalledTimes(3);
     expect(window.location.pathname).toBe(`/meals/${mockSearchMeal.meals[0].idMeal}/in-progress`);
     const ingredientCheckbox = screen.getByRole('checkbox');
-    screen.debug();
     await userEvent.click(ingredientCheckbox);
     expect(ingredientCheckbox).toBeChecked();
     const finishBtn = screen.getByTestId('finish-recipe-btn');
     await userEvent.click(finishBtn);
     expect(window.location.pathname).toBe('/done-recipes');
+  });
+
+  test('Testa checkbox a partir dos estados salvos', async () => {
   });
 });
